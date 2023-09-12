@@ -55,11 +55,5 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int[] arr = new int[]{213, 21341, 12, 23, 2345, 612, 3, 7, 3, 2, 435, 7, 34, 2, 26, 237, -2345, -2, -235, 0, 0, 0};
-        int[] res = heapsort(arr);
-
-        for (int i : res) System.out.print(i + " ");
-
-
     }
 }
