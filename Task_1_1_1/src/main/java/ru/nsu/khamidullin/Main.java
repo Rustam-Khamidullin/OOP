@@ -1,7 +1,10 @@
 package ru.nsu.khamidullin;
 
-
+/**
+ *Class Main
+ */
 public class Main {
+
     static void sift_up(int[] arr, int pos) {
         int parent = (pos + 1) / 2 - 1;
         if (pos != 0 && arr[parent] > arr[pos]) {
@@ -17,10 +20,12 @@ public class Main {
         int child2 = child1 + 1;
         int posMin = pos;
 
-        if (child1 < len && arr[posMin] > arr[child1])
+        if (child1 < len && arr[posMin] > arr[child1]) {
             posMin = child1;
-        if (child2 < len && arr[posMin] > arr[child2])
+        }
+        if (child2 < len && arr[posMin] > arr[child2]) {
             posMin = child2;
+        }
 
         if (posMin != pos) {
             int tmp = arr[pos];
@@ -30,11 +35,17 @@ public class Main {
         }
     }
 
+    /**
+     * Sorting function
+     * @param arr is the array to be sorted
+     * @return Sorted array
+     */
     public static int[] heapsort(int[] arr) {
         int len = arr.length;
 
-        for (int i = 1; i < len; i++)
+        for (int i = 1; i < len; i++) {
             sift_up(arr, i);
+        }
 
 
         for (int i = 0; i < len; i++) {
