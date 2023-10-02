@@ -1,27 +1,9 @@
 package ru.nsu.khamidullin;
 
 public class Polynomial {
-    private String doubleToString(double x) {
-        if (x % 1 == 0) {
-            return String.valueOf((int) x);
-        }
-        return String.valueOf(x);
-    }
-
-    public void delZero() {
-        int len = coefficients.length;
-        while (len > 1 && coefficients[len - 1] == 0) {
-            len -= 1;
-        }
-        double[] newCoef = new double[len];
-        for (int i = 0; i < len; i++) {
-            newCoef[i] = coefficients[i];
-        }
-        coefficients = newCoef;
-    }
-
-
     private double[] coefficients;
+    private double error_rate = 0.0000001;
+
 
     public Polynomial(double[] inputCoef) {
         if (inputCoef.length == 0) {
@@ -38,12 +20,40 @@ public class Polynomial {
         } else {
             coefficients = new double[inputCoef.length];
             for (int i = 0; i < inputCoef.length; i++) {
-                coefficients[i] = (double) inputCoef[i];
+                coefficients[i] = inputCoef[i];
             }
         }
         delZero();
     }
 
+    private String doubleToString(double x) {
+        if (x % 1 == 0) {
+            return String.valueOf((int) x);
+        }
+        return String.valueOf(x);
+    }
+
+    private boolean doubleEquals(double x, double y) {
+        return Math.abs(x - y) < error_rate;
+    }
+
+    private void delZero() {
+        int len = coefficients.length;
+        while (len > 1 && doubleEquals(coefficients[len - 1], 0)) {
+            len -= 1;
+        }
+        double[] newCoef = new double[len];
+        System.arraycopy(coefficients, 0, newCoef, 0, len);
+        coefficients = newCoef;
+    }
+
+    public double getError_rate() {
+        return error_rate;
+    }
+
+    public void setError_rate(double error_rate) {
+        this.error_rate = error_rate;
+    }
 
     public double[] getCoefficients() {
         return coefficients.clone();
@@ -52,7 +62,7 @@ public class Polynomial {
     public Polynomial plus(Polynomial polynomial) {
         double[] coef = polynomial.getCoefficients();
 
-        double [] res = new double[Math.max(coef.length, coefficients.length)];
+        double[] res = new double[Math.max(coef.length, coefficients.length)];
         for (int i = 0; i < res.length; i++) {
             if (i < coef.length) {
                 res[i] += coef[i];
@@ -61,9 +71,7 @@ public class Polynomial {
                 res[i] += coefficients[i];
             }
         }
-        var resPol = new Polynomial(res);
-        resPol.delZero();
-        return resPol;
+        return new Polynomial(res);
     }
 
     public Polynomial minus(Polynomial polynomial) {
@@ -100,7 +108,7 @@ public class Polynomial {
 
 
     public Polynomial differentiate(int n) {
-        double [] newCoef = new double[coefficients.length - n];
+        double[] newCoef = new double[coefficients.length - n];
 
         int fact = 1;
         for (int i = 1; i <= n; i++) {
@@ -124,15 +132,15 @@ public class Polynomial {
             return false;
         }
 
-        Polynomial polynomial = (Polynomial) obj;
+        var polynomial = (Polynomial) obj;
 
-        double [] coef = polynomial.getCoefficients();
+        double[] coef = polynomial.getCoefficients();
 
         if (coefficients.length != coef.length) {
             return false;
         }
         for (int i = 0; i < coefficients.length; i++) {
-            if (coefficients[i] != coef[i]) {
+            if (!doubleEquals(coefficients[i], coef[i])) {
                 return false;
             }
         }
@@ -168,7 +176,7 @@ public class Polynomial {
                 }
                 if (i > 1) {
                     str.append("x^").append(i);
-                }  else {
+                } else {
                     str.append("x");
                 }
             }
@@ -176,8 +184,7 @@ public class Polynomial {
 
         if (coefficients[0] < 0) {
             str.append(" - ").append(doubleToString(-coefficients[0]));
-        }
-        else if (len > 1 && coefficients[0] != 0) {
+        } else if (len > 1 && coefficients[0] != 0) {
             str.append(" + ").append(doubleToString(coefficients[0]));
         } else if (len == 1) {
             str.append(doubleToString(coefficients[0]));
