@@ -11,7 +11,7 @@ import java.util.Queue;
  *
  * @param <T> - the type of values in the Tree.
  */
-public class IteratorBFS<T> implements Iterator<T> {
+public class IteratorBfs<T> implements Iterator<T> {
     Tree<T> tree;
     Queue<Tree<T>> queue;
     long expectedModificationCount;
@@ -21,7 +21,7 @@ public class IteratorBFS<T> implements Iterator<T> {
      *
      * @param tree - the Tree to traverse.
      */
-    public IteratorBFS(Tree<T> tree) {
+    public IteratorBfs(Tree<T> tree) {
         this.queue = new LinkedList<>();
         this.tree = tree;
         queue.add(tree);

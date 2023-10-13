@@ -10,7 +10,7 @@ import java.util.Stack;
  *
  * @param <T> - the type of values in the Tree.
  */
-public class IteratorDFS<T> implements Iterator<T> {
+public class IteratorDfs<T> implements Iterator<T> {
     Tree<T> tree;
     Stack<Tree<T>> stack;
     long expectedModificationCount;
@@ -20,7 +20,7 @@ public class IteratorDFS<T> implements Iterator<T> {
      *
      * @param tree - the Tree to traverse.
      */
-    public IteratorDFS(Tree<T> tree) {
+    public IteratorDfs(Tree<T> tree) {
         this.tree = tree;
         this.stack = new Stack<>();
         stack.push(tree);

@@ -1,8 +1,5 @@
 package ru.nsu.khamidullin;
 
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,6 +8,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Implementation of a generic Tree class.
@@ -181,7 +179,8 @@ public class Tree<T> implements Iterable<T> {
      * @return a Stream of type T.
      */
     public Stream<T> stream() {
-        Spliterator<T> spliterator = Spliterators.spliteratorUnknownSize(iterator(), Spliterator.DISTINCT);
+        Spliterator<T> spliterator =
+                Spliterators.spliteratorUnknownSize(iterator(), Spliterator.DISTINCT);
         return StreamSupport.stream(spliterator, false);
     }
 
@@ -192,7 +191,7 @@ public class Tree<T> implements Iterable<T> {
      */
     @Override
     public @NotNull Iterator<T> iterator() {
-        return new IteratorBFS<>(this);
+        return new IteratorBfs<>(this);
     }
 
     /**
@@ -201,7 +200,7 @@ public class Tree<T> implements Iterable<T> {
      * @return an Iterator of type T.
      */
     public Iterator<T> getIteratorBFS() {
-        return new IteratorBFS<T>(this);
+        return new IteratorBfs<T>(this);
     }
 
     /**
@@ -210,7 +209,7 @@ public class Tree<T> implements Iterable<T> {
      * @return an Iterator of type T.
      */
     public Iterator<T> getIteratorDFS() {
-        return new IteratorDFS<T>(this);
+        return new IteratorDfs<T>(this);
     }
 
     /**

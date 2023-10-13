@@ -4,6 +4,9 @@ package ru.nsu.khamidullin;
  * Class Main.
  */
 public class Main {
+    /**
+     * main.
+     */
     public static void main(String[] args) {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
