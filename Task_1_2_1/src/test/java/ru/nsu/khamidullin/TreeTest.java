@@ -1,22 +1,21 @@
 package ru.nsu.khamidullin;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Class TreeTest
+ * Class TreeTest.
  */
 public class TreeTest {
     @Test
     @DisplayName("BFS")
-    void testGraphBFS() {
+    void testGraphBfs() {
         /*         1
          *       /   \
          *      2     2
@@ -40,7 +39,7 @@ public class TreeTest {
 
     @Test
     @DisplayName("DFS")
-    void testGraphDFS() {
+    void testGraphDfs() {
         /*         1
          *       /   \
          *      2     2
@@ -57,9 +56,9 @@ public class TreeTest {
 
         StringBuilder res = new StringBuilder();
 
-        Iterator<Integer> DFS = intTree.getIteratorDFS();
-        while (DFS.hasNext()) {
-            res.append(DFS.next());
+        Iterator<Integer> dfs = intTree.getIteratorDFS();
+        while (dfs.hasNext()) {
+            res.append(dfs.next());
         }
         assertEquals("1233233", res.toString());
     }
@@ -281,7 +280,6 @@ public class TreeTest {
         intSubTree.addChild(3);
 
 
-
         boolean exception = false;
 
         try {
@@ -295,7 +293,7 @@ public class TreeTest {
 
     @Test
     @DisplayName("Catch CannotAddChildException AddChild parent already exists")
-    void testCatchCannotAddChildExceptionAddChildPAE() {
+    void testCatchCannotAddChildExceptionAddChildParentAlreadyExists() {
         /*         1
          *       /
          *      2
@@ -305,7 +303,6 @@ public class TreeTest {
         Tree<Integer> intTree = new Tree<>(1);
         Tree<Integer> intSubTree = new Tree<>(2, intTree);
         Tree<Integer> intNewTree = new Tree<>(3, intSubTree);
-
 
 
         boolean exception = false;

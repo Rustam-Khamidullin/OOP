@@ -1,6 +1,10 @@
 package ru.nsu.khamidullin;
 
-import java.util.*;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * Class IteratorBFS is an iterator for breadth-first traversal of a Tree.

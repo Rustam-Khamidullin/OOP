@@ -1,10 +1,16 @@
 package ru.nsu.khamidullin;
 
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
 
 /**
  * Implementation of a generic Tree class.
@@ -71,8 +77,9 @@ public class Tree<T> implements Iterable<T> {
      * @throws CannotAddChildException if subTree is null or already has a parent.
      */
     public void addChild(Tree<T> subTree) throws CannotAddChildException {
-        if ((subTree == null) || (subTree.parent != null))
+        if ((subTree == null) || (subTree.parent != null)) {
             throw new CannotAddChildException("SubTree is null or parent already exists");
+        }
 
         children.add(subTree);
         subTree.parent = this;
@@ -159,7 +166,9 @@ public class Tree<T> implements Iterable<T> {
                     }
                 }
 
-                if (!foundEquals) return false;
+                if (!foundEquals) {
+                    return false;
+                }
             }
         }
 
@@ -185,7 +194,6 @@ public class Tree<T> implements Iterable<T> {
     public @NotNull Iterator<T> iterator() {
         return new IteratorBFS<>(this);
     }
-
 
     /**
      * Get IteratorBFS.
@@ -213,6 +221,7 @@ public class Tree<T> implements Iterable<T> {
     public T getRoot() {
         return root;
     }
+
     /**
      * Set the root value of the tree.
      *
