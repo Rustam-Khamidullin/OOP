@@ -1,16 +1,21 @@
 package ru.nsu.khamidullin;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.stream.Stream;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Class TreeTest
+ */
 public class TreeTest {
     @Test
+    @DisplayName("BFS")
     void testGraphBFS() {
         /*         1
          *       /   \
@@ -34,6 +39,7 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("DFS")
     void testGraphDFS() {
         /*         1
          *       /   \
@@ -51,7 +57,7 @@ public class TreeTest {
 
         StringBuilder res = new StringBuilder();
 
-        Iterator<Integer> DFS = intTree.iteratorDFS();
+        Iterator<Integer> DFS = intTree.getIteratorDFS();
         while (DFS.hasNext()) {
             res.append(DFS.next());
         }
@@ -59,6 +65,7 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("AddChild")
     void testAddChild() {
         /*         1
          *       /   \
@@ -67,14 +74,12 @@ public class TreeTest {
          *   3    3      3
          */
         Tree<Integer> intTree = new Tree<>(1);
-        Tree<Integer> intSubTree = new Tree<>(2);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
 
         Tree<Integer> child1 = intTree.addChild(2);
         child1.addChild(3);
         child1.addChild(3);
         intSubTree.addChild(3);
-
-        intTree.addChild(intSubTree);
 
         StringBuilder res = new StringBuilder();
 
@@ -86,6 +91,7 @@ public class TreeTest {
 
 
     @Test
+    @DisplayName("Delete")
     void testDelete() {
         /*         1
          *       /   \
@@ -94,14 +100,12 @@ public class TreeTest {
          *   3    3      3
          */
         Tree<Integer> intTree = new Tree<>(1);
-        Tree<Integer> intSubTree = new Tree<>(2);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
 
         Tree<Integer> child1 = intTree.addChild(2);
         child1.addChild(3);
         child1.addChild(3);
         intSubTree.addChild(3);
-
-        intTree.addChild(intSubTree);
 
         StringBuilder res = new StringBuilder();
 
@@ -119,6 +123,7 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("DeleteMeFromMyParent")
     void testDeleteMeFromMyParent() {
         /*         1
          *       /   \
@@ -158,6 +163,34 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("DeleteMeAndSaveChildren")
+    void testDeleteMeAndSaveChildren() {
+        /*         1
+         *       /   \
+         *      2     3
+         *    /  \
+         *   3    3
+         */
+        Tree<Integer> intTree = new Tree<>(1);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
+
+        intTree.addChild(3);
+        intSubTree.addChild(3);
+        intSubTree.addChild(3);
+
+        intSubTree.deleteMeAndSaveChildren();
+
+        StringBuilder res = new StringBuilder();
+
+        for (var value : intTree) {
+            res.append(value);
+        }
+
+        assertEquals("1333", res.toString());
+    }
+
+    @Test
+    @DisplayName("Catch ConcurrentModificationException Delete")
     void testCatchConcurrentModificationExceptionDelete() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
@@ -183,6 +216,7 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("Catch ConcurrentModificationException DeleteMeFromMyParent")
     void testCatchConcurrentModificationExceptionDeleteMeFromMyParent() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
@@ -208,6 +242,7 @@ public class TreeTest {
     }
 
     @Test
+    @DisplayName("Catch ConcurrentModificationException AddChild")
     void testCatchConcurrentModificationExceptionAddChild() {
         Tree<String> tree = new Tree<>("R1");
         var a = tree.addChild("A");
@@ -231,4 +266,58 @@ public class TreeTest {
 
         assertTrue(exception);
     }
+
+    @Test
+    @DisplayName("Catch CannotAddChildException AddChild null")
+    void testCatchCannotAddChildExceptionAddChildNull() {
+        /*         1
+         *       /
+         *      2
+         *    /
+         *   3
+         */
+        Tree<Integer> intTree = new Tree<>(1);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
+        intSubTree.addChild(3);
+
+
+
+        boolean exception = false;
+
+        try {
+            intTree.addChild((Tree<Integer>) null);
+        } catch (CannotAddChildException e) {
+            exception = true;
+        }
+
+        assertTrue(exception);
+    }
+
+    @Test
+    @DisplayName("Catch CannotAddChildException AddChild parent already exists")
+    void testCatchCannotAddChildExceptionAddChildPAE() {
+        /*         1
+         *       /
+         *      2
+         *    /
+         *   3
+         */
+        Tree<Integer> intTree = new Tree<>(1);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
+        Tree<Integer> intNewTree = new Tree<>(3, intSubTree);
+
+
+
+        boolean exception = false;
+
+        try {
+            intTree.addChild(intNewTree);
+        } catch (CannotAddChildException e) {
+            exception = true;
+        }
+
+        assertTrue(exception);
+    }
+
+
 }

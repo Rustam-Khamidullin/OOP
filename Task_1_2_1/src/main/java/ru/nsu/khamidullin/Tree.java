@@ -6,34 +6,37 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Implementation of a generic Tree class.
+ *
+ * @param <T> - the type of the tree's value.
+ */
+public class Tree<T> implements Iterable<T> {
 
-
-public class Tree<T> implements Iterable {
-    /**
-     *
-     */
     private T root;
     private Tree<T> parent;
     private Set<Tree<T>> children;
 
     private long modificationCount;
 
-    /*
-     *   Tree constructor by value.
+    /**
+     * Constructor for a Tree.
+     *
+     * @param root - the value in the root.
      */
     public Tree(T root) {
-        /**
-         *
-         */
-
         this.root = root;
         this.parent = null;
         this.modificationCount = 0;
         this.children = new HashSet<>();
     }
 
-    /*
-    Tree constructor by subtree.
+    /**
+     * Constructor for a Tree.
+     * Connects a new Tree to its parent.
+     *
+     * @param root   - the value in the root.
+     * @param parent - the parent Tree.
      */
     public Tree(T root, Tree<T> parent) {
         this.root = root;
@@ -45,6 +48,12 @@ public class Tree<T> implements Iterable {
         }
     }
 
+    /**
+     * Add a child to the tree.
+     *
+     * @param value - the value of the root in the new Tree.
+     * @return the new Tree.
+     */
     public Tree<T> addChild(T value) {
         Tree<T> child = new Tree<>(value);
 
@@ -55,17 +64,25 @@ public class Tree<T> implements Iterable {
         return child;
     }
 
-    public Tree<T> addChild(Tree<T> subTree) {
-        if ((subTree == null) || (subTree.parent != null)) return null;
+    /**
+     * Add a subtree to the tree.
+     *
+     * @param subTree - the child Tree.
+     * @throws CannotAddChildException if subTree is null or already has a parent.
+     */
+    public void addChild(Tree<T> subTree) throws CannotAddChildException {
+        if ((subTree == null) || (subTree.parent != null))
+            throw new CannotAddChildException("SubTree is null or parent already exists");
 
         children.add(subTree);
         subTree.parent = this;
 
         incModificationCount();
-        return subTree;
     }
 
-
+    /**
+     * Delete the entire Tree.
+     */
     public void delete() {
         deleteMeFromMyParent();
 
@@ -78,6 +95,9 @@ public class Tree<T> implements Iterable {
         root = null;
     }
 
+    /**
+     * Delete the connection with the parent.
+     */
     public void deleteMeFromMyParent() {
         if (parent != null) {
             parent.children.remove(this);
@@ -86,7 +106,29 @@ public class Tree<T> implements Iterable {
         }
     }
 
+    /**
+     * Delete the node, but keep its children by attaching them to the parent of the deleted node.
+     */
+    public void deleteMeAndSaveChildren() {
+        if (parent != null) {
+            for (var child : children) {
+                child.parent = this.parent;
+            }
+            parent.children.addAll(this.children);
+            deleteMeFromMyParent();
+            children = null;
+            root = null;
+        } else {
+            throw new CannotAddChildException("There is not new parent.");
+        }
+    }
 
+    /**
+     * Checks if two Trees are equal.
+     *
+     * @param object - the input Tree.
+     * @return true if the Trees are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object object) {
         if ((object == null) || (object.getClass() != getClass())) {
@@ -124,100 +166,92 @@ public class Tree<T> implements Iterable {
         return true;
     }
 
+    /**
+     * Create a Stream from the elements in the tree.
+     *
+     * @return a Stream of type T.
+     */
     public Stream<T> stream() {
         Spliterator<T> spliterator = Spliterators.spliteratorUnknownSize(iterator(), Spliterator.DISTINCT);
         return StreamSupport.stream(spliterator, false);
     }
 
+    /**
+     * Implement the Iterable interface.
+     *
+     * @return an Iterator of type T.
+     */
     @Override
     public @NotNull Iterator<T> iterator() {
-        return new BFSIterator();
+        return new IteratorBFS<>(this);
     }
 
-    public Iterator<T> iteratorDFS() {
-        return new DFSIterator();
+
+    /**
+     * Get IteratorBFS.
+     *
+     * @return an Iterator of type T.
+     */
+    public Iterator<T> getIteratorBFS() {
+        return new IteratorBFS<T>(this);
     }
 
-    public Iterator<T> iteratorBFS() {
-        return new BFSIterator();
+    /**
+     * Get IteratorDFS.
+     *
+     * @return an Iterator of type T.
+     */
+    public Iterator<T> getIteratorDFS() {
+        return new IteratorDFS<T>(this);
     }
 
-    private class DFSIterator implements Iterator<T> {
-        Stack<Tree<T>> stack;
-        long expectedModificationCount;
-
-        public DFSIterator() {
-            this.stack = new Stack<>();
-            stack.push(Tree.this);
-            this.expectedModificationCount = modificationCount;
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (expectedModificationCount != modificationCount) {
-                throw new ConcurrentModificationException();
-            }
-            return !stack.isEmpty();
-        }
-
-        @Override
-        public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-
-            Tree<T> curTree = stack.pop();
-            stack.addAll(curTree.children);
-            return curTree.root;
-        }
-    }
-
-    private class BFSIterator implements Iterator<T> {
-        Queue<Tree<T>> queue;
-        long expectedModificationCount;
-
-        public BFSIterator() {
-            this.queue = new LinkedList<>();
-            queue.add(Tree.this);
-            this.expectedModificationCount = modificationCount;
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (expectedModificationCount != modificationCount) {
-                throw new ConcurrentModificationException();
-            }
-            return !queue.isEmpty();
-        }
-
-        @Override
-        public T next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-
-            Tree<T> curTree = queue.poll();
-            queue.addAll(curTree.children);
-            return curTree.root;
-        }
-    }
-
+    /**
+     * Get the root value of the tree.
+     *
+     * @return the root value.
+     */
     public T getRoot() {
         return root;
     }
-
+    /**
+     * Set the root value of the tree.
+     *
+     * @param root - the new root value.
+     */
     public void setRoot(T root) {
         this.root = root;
     }
 
+    /**
+     * Get the parent Tree.
+     *
+     * @return the parent Tree.
+     */
     public Tree<T> getParent() {
         return parent;
     }
 
+    /**
+     * Get a copy of the children of the tree.
+     *
+     * @return a set of child Trees.
+     */
     public Set<Tree<T>> getChildren() {
         return new HashSet<>(children);
     }
 
+    /**
+     * Get the modification count, which tracks the number of modifications to the tree.
+     *
+     * @return the modification count.
+     */
+    public long getModificationCount() {
+        return modificationCount;
+    }
+
+    /**
+     * Increment the modification count for this tree and its parent recursively.
+     */
     private void incModificationCount() {
         modificationCount++;
         if (parent != null) {
