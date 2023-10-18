@@ -53,12 +53,43 @@ public class Tree<T> implements Iterable<T> {
     }
 
     /**
+     * Copy constructor for creating a copy of a tree based on an existing tree.
+     * Creates a new tree with a root and structure similar to the existing tree.
+     *
+     * @param copyTree The tree to be copied.
+     */
+    public Tree(Tree<T> copyTree) {
+        this(copyTree, null);
+    }
+
+    /**
+     * Deep copy.
+     * @param copyTree tree will be copped.
+     * @param parentTree parent.
+     */
+    private Tree(Tree<T> copyTree, Tree<T> parentTree) {
+        if (parentTree != null) {
+            parentTree.addChild(this);
+        }
+        this.parent = parentTree;
+        this.root = copyTree.root;
+        this.modificationCount = 0;
+        this.children = new HashSet<>();
+        for (var child : copyTree.getChildren()) {
+            new Tree<>(child, this);
+        }
+    }
+
+    /**
      * Add a child to the tree.
      *
      * @param value - the value of the root in the new Tree.
      * @return the new Tree.
      */
     public Tree<T> addChild(T value) {
+        if (value == null) {
+            throw new CannotAddChildException("Failed to add null value.");
+        }
         Tree<T> child = new Tree<>(value);
 
         children.add(child);
@@ -74,7 +105,7 @@ public class Tree<T> implements Iterable<T> {
      * @param subTree - the child Tree.
      * @throws CannotAddChildException if subTree is null or already has a parent.
      */
-    public void addChild(Tree<T> subTree) throws CannotAddChildException {
+    public void addChild(Tree<T> subTree) {
         if ((subTree == null) || (subTree.parent != null)) {
             throw new CannotAddChildException("SubTree is null or parent already exists");
         }
@@ -200,7 +231,7 @@ public class Tree<T> implements Iterable<T> {
      * @return an Iterator of type T.
      */
     public Iterator<T> getIteratorBFS() {
-        return new IteratorBfs<T>(this);
+        return new IteratorBfs<>(this);
     }
 
     /**
@@ -209,7 +240,7 @@ public class Tree<T> implements Iterable<T> {
      * @return an Iterator of type T.
      */
     public Iterator<T> getIteratorDFS() {
-        return new IteratorDfs<T>(this);
+        return new IteratorDfs<>(this);
     }
 
     /**

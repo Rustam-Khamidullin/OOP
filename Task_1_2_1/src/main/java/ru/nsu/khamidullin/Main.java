@@ -8,9 +8,9 @@ public class Main {
      * main.
      */
     public static void main(String[] args) {
-        Tree<String> tree = new Tree<>("R1");
+        var tree = new Tree<>("R1");
         var a = tree.addChild("A");
-        var b = a.addChild("B");
+        a.addChild("B");
         Tree<String> subtree = new Tree<>("R2");
         subtree.addChild("C");
         subtree.addChild("R1");

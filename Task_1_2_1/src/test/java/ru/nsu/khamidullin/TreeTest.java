@@ -315,5 +315,32 @@ public class TreeTest {
         assertTrue(exception);
     }
 
+    @Test
+    @DisplayName("Catch CannotAddChildException AddChild parent already exists")
+    void testCopyTree() {
+        /*         1
+         *       /
+         *      2
+         *    /  \
+         *   3    3
+         */
+        Tree<Integer> intTree = new Tree<>(1);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
 
+        intSubTree.addChild(3);
+        intSubTree.addChild(3);
+
+        var copuTree = new Tree<>(intTree);
+
+        intSubTree.setRoot(999);
+        intTree.setRoot(999);
+
+        var res = new StringBuilder();
+
+        for (var value : copuTree) {
+            res.append(value);
+        }
+
+        assertEquals("1233", res.toString());
+    }
 }
