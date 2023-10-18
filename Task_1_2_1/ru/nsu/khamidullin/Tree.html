@@ -162,12 +162,18 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(ru.nsu.khamidullin.Tree)">Tree</a></span>&#8203;(<a href="Tree.html" title="class in ru.nsu.khamidullin">Tree</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;copyTree)</code></th>
+<td class="colLast">
+<div class="block">Copy constructor for creating a copy of a tree based on an existing tree.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(T)">Tree</a></span>&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;root)</code></th>
 <td class="colLast">
 <div class="block">Constructor for a Tree.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(T,ru.nsu.khamidullin.Tree)">Tree</a></span>&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;root,
     <a href="Tree.html" title="class in ru.nsu.khamidullin">Tree</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;parent)</code></th>
 <td class="colLast">
@@ -349,7 +355,7 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 </a><a id="&lt;init&gt;(T,ru.nsu.khamidullin.Tree)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Tree</h4>
 <pre>public&nbsp;Tree&#8203;(<a href="Tree.html" title="type parameter in Tree">T</a>&nbsp;root,
@@ -360,6 +366,21 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>root</code> - - the value in the root.</dd>
 <dd><code>parent</code> - - the parent Tree.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(ru.nsu.khamidullin.Tree)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Tree</h4>
+<pre>public&nbsp;Tree&#8203;(<a href="Tree.html" title="class in ru.nsu.khamidullin">Tree</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;copyTree)</pre>
+<div class="block">Copy constructor for creating a copy of a tree based on an existing tree.
+ Creates a new tree with a root and structure similar to the existing tree.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>copyTree</code> - The tree to be copied.</dd>
 </dl>
 </li>
 </ul>
@@ -397,8 +418,7 @@ implements java.lang.Iterable&lt;T&gt;</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>addChild</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addChild&#8203;(<a href="Tree.html" title="class in ru.nsu.khamidullin">Tree</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;subTree)
-              throws <a href="CannotAddChildException.html" title="class in ru.nsu.khamidullin">CannotAddChildException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addChild&#8203;(<a href="Tree.html" title="class in ru.nsu.khamidullin">Tree</a>&lt;<a href="Tree.html" title="type parameter in Tree">T</a>&gt;&nbsp;subTree)</pre>
 <div class="block">Add a subtree to the tree.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
