@@ -1,9 +1,10 @@
 package ru.nsu.khamidullin;
 
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

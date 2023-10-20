@@ -1,9 +1,8 @@
 package ru.nsu.khamidullin;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.stream.Stream;
+import org.jetbrains.annotations.NotNull;
 import java.util.stream.StreamSupport;
 
 /**
@@ -156,6 +155,10 @@ public class Tree<T> implements Iterable<T> {
         }
     }
 
+
+    /**
+     * @return size of tree.
+     */
     public int size() {
         int result = 1;
         for (var child : this.children) {
