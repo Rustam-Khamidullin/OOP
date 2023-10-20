@@ -12,9 +12,9 @@ import java.util.Queue;
  * @param <T> - the type of values in the Tree.
  */
 public class IteratorBfs<T> implements Iterator<T> {
-    Tree<T> tree;
-    Queue<Tree<T>> queue;
-    long expectedModificationCount;
+    private final Tree<T> tree;
+    private final Queue<Tree<T>> queue;
+    private final long expectedModificationCount;
 
     /**
      * Constructor for IteratorBFS.

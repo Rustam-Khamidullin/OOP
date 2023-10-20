@@ -11,9 +11,9 @@ import java.util.Stack;
  * @param <T> - the type of values in the Tree.
  */
 public class IteratorDfs<T> implements Iterator<T> {
-    Tree<T> tree;
-    Stack<Tree<T>> stack;
-    long expectedModificationCount;
+    private final Tree<T> tree;
+    private final Stack<Tree<T>> stack;
+    private final long expectedModificationCount;
 
     /**
      * Constructor for IteratorDFS.

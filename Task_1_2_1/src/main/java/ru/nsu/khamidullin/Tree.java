@@ -1,14 +1,10 @@
 package ru.nsu.khamidullin;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Implementation of a generic Tree class.
@@ -64,7 +60,8 @@ public class Tree<T> implements Iterable<T> {
 
     /**
      * Deep copy.
-     * @param copyTree tree will be copped.
+     *
+     * @param copyTree   tree will be copped.
      * @param parentTree parent.
      */
     private Tree(Tree<T> copyTree, Tree<T> parentTree) {
@@ -159,6 +156,14 @@ public class Tree<T> implements Iterable<T> {
         }
     }
 
+    public int size() {
+        int result = 1;
+        for (var child : this.children) {
+            result += child.size();
+        }
+        return result;
+    }
+
     /**
      * Checks if two Trees are equal.
      *
@@ -210,8 +215,10 @@ public class Tree<T> implements Iterable<T> {
      * @return a Stream of type T.
      */
     public Stream<T> stream() {
-        Spliterator<T> spliterator =
-                Spliterators.spliteratorUnknownSize(iterator(), Spliterator.DISTINCT);
+        var spliterator =
+                Spliterators.spliterator(iterator(), size(),
+                        Spliterator.DISTINCT | Spliterator.IMMUTABLE
+                                | Spliterator.NONNULL | Spliterator.SIZED);
         return StreamSupport.stream(spliterator, false);
     }
 
@@ -297,4 +304,5 @@ public class Tree<T> implements Iterable<T> {
             parent.incModificationCount();
         }
     }
+
 }

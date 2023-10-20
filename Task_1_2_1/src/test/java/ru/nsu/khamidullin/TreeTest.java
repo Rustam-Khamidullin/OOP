@@ -343,4 +343,23 @@ public class TreeTest {
 
         assertEquals("1233", res.toString());
     }
+
+    @Test
+    @DisplayName("Test Size")
+    void testSize() {
+        /*         1
+         *       /
+         *      2
+         *    /  \
+         *   3    3
+         */
+        Tree<Integer> intTree = new Tree<>(1);
+        Tree<Integer> intSubTree = new Tree<>(2, intTree);
+
+        intSubTree.addChild(3);
+        intSubTree.addChild(3);
+
+        assertEquals(intTree.size(), 4);
+        assertEquals(intSubTree.size(), 3);
+    }
 }
