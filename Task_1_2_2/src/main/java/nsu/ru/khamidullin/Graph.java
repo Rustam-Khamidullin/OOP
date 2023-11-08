@@ -27,12 +27,10 @@ public abstract class Graph<T> {
      * Reads a graph from a text file and constructs an instance of the Adjacency List Graph.
      *
      * @param file The path to the input file containing graph data.
-     * @return An Adjacency List Graph created from the file data.
      * @throws RuntimeException if an I/O error occurs during file reading.
      */
-    public static AdjacecyListGraph<String> readGraphFromFile(String file) {
+    public static void readGraphFromFile(Graph<String> graph, String file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            var result = new AdjacecyListGraph<String>();
             var existingVertexes = new HashMap<String, Vertex<String>>();
 
             String line;
@@ -49,21 +47,20 @@ public abstract class Graph<T> {
                     String secondVertex = matcher.group(4);
 
                     if (!existingVertexes.containsKey(firstVertex)) {
-                        existingVertexes.put(firstVertex, result.addVertex(firstVertex));
+                        existingVertexes.put(firstVertex, graph.addVertex(firstVertex));
                     }
                     if (!existingVertexes.containsKey(secondVertex)) {
-                        existingVertexes.put(secondVertex, result.addVertex(secondVertex));
+                        existingVertexes.put(secondVertex, graph.addVertex(secondVertex));
                     }
                     if (bidirectional.isEmpty()) {
-                        result.addEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
+                        graph.addEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
                     } else {
-                        result.addBidirectionalEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
+                        graph.addBidirectionalEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
                     }
                 } else {
                     throw new IOException();
                 }
             }
-            return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

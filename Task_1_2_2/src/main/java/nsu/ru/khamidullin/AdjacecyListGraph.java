@@ -1,9 +1,6 @@
 package nsu.ru.khamidullin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class representing a graph using an adjacency list.
@@ -51,6 +48,7 @@ public class AdjacecyListGraph<T> extends Graph<T> {
         for (var verToVertex : reversedAdjacencyList.get(vertex)) {
             deleteLink(verToVertex, vertex);
         }
+        vertexes.remove(vertex);
         adjacencyList.remove(vertex);
         reversedAdjacencyList.remove(vertex);
     }

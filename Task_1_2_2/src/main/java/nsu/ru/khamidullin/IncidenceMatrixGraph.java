@@ -76,10 +76,16 @@ public class IncidenceMatrixGraph<T> extends Graph<T> {
         vertexFromIndex.remove(index);
         indexFromVertex.remove(vertex);
         vertexes.remove(vertex);
+        for (var v : indexFromVertex.keySet()) {
+            if (indexFromVertex.get(v) > index) {
+                indexFromVertex.put(v, indexFromVertex.get(v) - 1);
+            }
+        }
+
 
         for (var l : incidenceMatrix) {
-            for (var inx : toDelete) {
-                l.remove((int) inx);
+            for (int i = toDelete.size() - 1; i >= 0; i--) {
+                l.remove(i);
             }
         }
         cntEdges -= toDelete.size();
@@ -107,7 +113,7 @@ public class IncidenceMatrixGraph<T> extends Graph<T> {
         for (int i = 0; i < incidenceMatrix.size(); i++) {
             if (i == indexFrom) {
                 incidenceMatrix.get(i).add(weight);
-            } else if (i == indexTo) {
+            } else if (i == indexTo && from != to) {
                 incidenceMatrix.get(i).add(-weight);
             } else {
                 incidenceMatrix.get(i).add(0L);
@@ -134,12 +140,34 @@ public class IncidenceMatrixGraph<T> extends Graph<T> {
         var lineFrom = incidenceMatrix.get(indexFromVertex.get(from));
         var lineTo = incidenceMatrix.get(indexFromVertex.get(to));
 
+        if (from == to) {
+            for (int i = 0; i < cntEdges; i++) {
+                boolean loop = true;
+                if (lineFrom.get(i) > 0) {
+                    for (int j = 0; j < incidenceMatrix.size(); j++) {
+                        if (incidenceMatrix.get(j).get(i) < 0) {
+                            loop = false;
+                            break;
+                        }
+                    }
+                    if (loop) {
+                        for (var line : incidenceMatrix) {
+                            line.remove(i);
+                        }
+                        return;
+                    }
+                }
+            }
+            return;
+        }
+
         for (int i = 0; i < cntEdges; i++) {
             if (lineFrom.get(i) > 0 && lineTo.get(i) < 0) {
                 for (var line : incidenceMatrix) {
                     line.remove(i);
                 }
                 cntEdges--;
+                return;
             }
         }
     }
@@ -166,10 +194,15 @@ public class IncidenceMatrixGraph<T> extends Graph<T> {
 
         for (int i = 0; i < cntEdges; i++) {
             if (line.get(i) > 0) {
+                boolean loop = true;
                 for (int j = 0; j < incidenceMatrix.size(); j++) {
                     if (incidenceMatrix.get(j).get(i) < 0) {
+                        loop = false;
                         result.add(new Edge<>(vertexFromIndex.get(j), line.get(i)));
                     }
+                }
+                if (loop) {
+                    result.add(new Edge<>(vertex, line.get(i)));
                 }
             }
         }

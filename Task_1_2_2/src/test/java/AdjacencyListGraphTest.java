@@ -1,5 +1,6 @@
 import nsu.ru.khamidullin.AdjacecyListGraph;
 import nsu.ru.khamidullin.Graph;
+import nsu.ru.khamidullin.IncidenceMatrixGraph;
 import nsu.ru.khamidullin.Vertex;
 import org.junit.jupiter.api.Test;
 
@@ -33,42 +34,44 @@ public class AdjacencyListGraphTest {
 
     @Test
     public void testSort2() {
-        AdjacecyListGraph<String> graph = new AdjacecyListGraph<>();
+        var graph = new IncidenceMatrixGraph<String>();
 
-        var A = graph.addVertex("A");
-        var B = graph.addVertex("B");
-        var C = graph.addVertex("C");
-        var D = graph.addVertex("D");
-        var E = graph.addVertex("E");
-        var F = graph.addVertex("F");
-        var G = graph.addVertex("G");
+        var a = graph.addVertex("A");
+        var b = graph.addVertex("B");
+        var c = graph.addVertex("C");
+        var d = graph.addVertex("D");
+        var e = graph.addVertex("E");
+        var f = graph.addVertex("F");
+        var g = graph.addVertex("G");
 
-        graph.addBidirectionalEdge(A, B, 5);
-        graph.addBidirectionalEdge(A, D, 12);
-        graph.addBidirectionalEdge(A, G, 25);
-        graph.addBidirectionalEdge(B, D, 8);
-        graph.addBidirectionalEdge(D, C, 2);
-        graph.addBidirectionalEdge(C, E, 4);
-        graph.addBidirectionalEdge(C, G, 10);
-        graph.addBidirectionalEdge(C, F, 5);
-        graph.addBidirectionalEdge(E, G, 5);
-        graph.addBidirectionalEdge(G, F, 10);
+        graph.addBidirectionalEdge(a, b, 5);
+        graph.addBidirectionalEdge(a, d, 12);
+        graph.addBidirectionalEdge(a, g, 25);
+        graph.addBidirectionalEdge(b, d, 8);
+        graph.addBidirectionalEdge(d, c, 2);
+        graph.addBidirectionalEdge(c, e, 4);
+        graph.addBidirectionalEdge(c, g, 10);
+        graph.addBidirectionalEdge(c, f, 5);
+        graph.addBidirectionalEdge(e, g, 5);
+        graph.addBidirectionalEdge(g, f, 10);
 
 
-        var sortedVertexes = graph.distanceSort(C);
+        var sortedVertexes = graph.distanceSort(c);
 
-        assertSame(sortedVertexes.get(0), C);
-        assertSame(sortedVertexes.get(1), D);
-        assertSame(sortedVertexes.get(2), E);
-        assertSame(sortedVertexes.get(3), F);
-        assertSame(sortedVertexes.get(4), G);
-        assertSame(sortedVertexes.get(5), B);
-        assertSame(sortedVertexes.get(6), A);
+        assertSame(sortedVertexes.get(0), c);
+        assertSame(sortedVertexes.get(1), d);
+        assertSame(sortedVertexes.get(2), e);
+        assertSame(sortedVertexes.get(3), f);
+        assertSame(sortedVertexes.get(4), g);
+        assertSame(sortedVertexes.get(5), b);
+        assertSame(sortedVertexes.get(6), a);
     }
 
     @Test
     public void testReadFile1() {
-        var graph = Graph.readGraphFromFile("src/test/resources/Test1");
+        var graph = new AdjacecyListGraph<String>();
+        Graph.readGraphFromFile(graph, "src/test/resources/Test1");
+
         Vertex<String> vertex = null;
         for (var ver : graph.getVertexes()) {
             if (ver.getValue().equals("A")) {
@@ -86,7 +89,8 @@ public class AdjacencyListGraphTest {
 
     @Test
     public void testReadFile2() {
-        var graph = Graph.readGraphFromFile("src/test/resources/Test2");
+        var graph = new AdjacecyListGraph<String>();
+        Graph.readGraphFromFile(graph, "src/test/resources/Test2");
         Vertex<String> vertex = null;
         for (var ver : graph.getVertexes()) {
             if (ver.getValue().equals("C")) {
@@ -104,5 +108,44 @@ public class AdjacencyListGraphTest {
         assertEquals(sortedVertexes.get(4).getValue(), "G");
         assertEquals(sortedVertexes.get(5).getValue(), "B");
         assertEquals(sortedVertexes.get(6).getValue(), "A");
+    }
+
+    @Test
+    public void testDeleteVertex() {
+        var graph = new AdjacecyListGraph<>();
+
+        var first = graph.addVertex(1);
+        var second = graph.addVertex(2);
+        var three = graph.addVertex(3);
+
+        graph.addEdge(first, second, 3);
+        graph.addEdge(first, three, 1);
+        graph.addEdge(second, three, 1);
+
+        graph.deleteVertex(first);
+
+        assertEquals(2, graph.getVertexes().size());
+        assertEquals(1, graph.getEdges(second).size());
+        assertEquals(0, graph.getEdges(three).size());
+    }
+
+    @Test
+    public void testDeleteEdge() {
+        var graph = new IncidenceMatrixGraph<Integer>();
+
+        var first = graph.addVertex(1);
+        var second = graph.addVertex(2);
+        var three = graph.addVertex(3);
+
+        graph.addEdge(first, second, 3);
+        graph.addEdge(first, three, 1);
+        graph.addEdge(second, three, 1);
+
+        graph.deleteEdge(first, second);
+
+        assertEquals(3, graph.getVertexes().size());
+        assertEquals(1, graph.getEdges(first).size());
+        assertEquals(1, graph.getEdges(second).size());
+        assertEquals(0, graph.getEdges(three).size());
     }
 }
