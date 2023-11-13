@@ -173,6 +173,26 @@ public class IncidenceMatrixGraph<T> extends Graph<T> {
     }
 
     /**
+     * Chang edge weight.
+     *
+     * @param from   The source vertex.
+     * @param to     The target vertex.
+     * @param weight New weight.
+     */
+    @Override
+    public void changeEdge(Vertex<T> from, Vertex<T> to, long weight) {
+        var lineFrom = incidenceMatrix.get(indexFromVertex.get(from));
+        var lineTo = incidenceMatrix.get(indexFromVertex.get(to));
+
+        for (int i = 0; i < cntEdges; i++) {
+            if (lineFrom.get(i) != 0 && lineTo.get(i) != 0) {
+                lineTo.set(i, weight);
+                lineFrom.set(i, weight);
+            }
+        }
+    }
+
+    /**
      * Retrieves a list of edges originating from the specified vertex.
      *
      * @param vertex The vertex for which to retrieve edges.

@@ -3,9 +3,14 @@ package nsu.ru.khamidullin;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.NavigableSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.TreeSet;
 
 /**
  * An abstract class representing a graph data structure.
@@ -13,7 +18,8 @@ import java.util.regex.Pattern;
  * @param <T> The type of data stored in the graph's vertices.
  */
 public abstract class Graph<T> {
-    private static final Pattern EDGE_RE = Pattern.compile("^([A-Za-z0-9 _]+)(<?)-(\\d+)->([A-Za-z0-9 _]+)$");
+    private static final Pattern EDGE_RE = Pattern.compile
+            ("^([A-Za-z0-9 _]+)(<?)-(\\d+)->([A-Za-z0-9 _]+)$");
     protected final HashSet<Vertex<T>> vertexes;
 
     /**
@@ -53,9 +59,11 @@ public abstract class Graph<T> {
                         existingVertexes.put(secondVertex, graph.addVertex(secondVertex));
                     }
                     if (bidirectional.isEmpty()) {
-                        graph.addEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
+                        graph.addEdge(existingVertexes.get(firstVertex),
+                                existingVertexes.get(secondVertex), weight);
                     } else {
-                        graph.addBidirectionalEdge(existingVertexes.get(firstVertex), existingVertexes.get(secondVertex), weight);
+                        graph.addBidirectionalEdge(existingVertexes.get(firstVertex),
+                                existingVertexes.get(secondVertex), weight);
                     }
                 } else {
                     throw new IOException();
@@ -100,6 +108,15 @@ public abstract class Graph<T> {
      * @param to   The target vertex.
      */
     public abstract void deleteEdge(Vertex<T> from, Vertex<T> to);
+
+    /**
+     * Chang edge weight.
+     *
+     * @param from   The source vertex.
+     * @param to     The target vertex.
+     * @param weight New weight.
+     */
+    public abstract void changeEdge(Vertex<T> from, Vertex<T> to, long weight);
 
     /**
      * Retrieves a list of edges originating from the specified vertex.
@@ -210,7 +227,8 @@ public abstract class Graph<T> {
 
                 var tmp = vertexToVertexAndDistances.get(neighbourEdge.getVertex());
 
-                if (tmp.getDistance() > (neighbourEdge.getDistance() + currentVertex.getDistance())) {
+                if (tmp.getDistance() > (neighbourEdge.getDistance() +
+                        currentVertex.getDistance())) {
                     vertexAndDistances.remove(tmp);
                     tmp.setDistance(neighbourEdge.getDistance() + currentVertex.getDistance());
                     vertexAndDistances.add(tmp);

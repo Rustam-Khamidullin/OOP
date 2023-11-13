@@ -1,6 +1,9 @@
 package nsu.ru.khamidullin;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class representing a graph using an adjacency list.
@@ -8,10 +11,13 @@ import java.util.*;
  * @param <T> The type of data stored in the graph's vertices.
  */
 public class AdjacecyListGraph<T> extends Graph<T> {
-    private final HashMap<Vertex<T>, HashMap<Vertex<T>, Long>> adjacencyList;
+    private final HashMap<Vertex<T>, LinkedList<Edge<T>>> adjacencyList;
     private final HashMap<Vertex<T>, HashSet<Vertex<T>>> reversedAdjacencyList;
 
 
+    /**
+     * Constructor
+     */
     public AdjacecyListGraph() {
         super();
         adjacencyList = new HashMap<>();
@@ -27,11 +33,13 @@ public class AdjacecyListGraph<T> extends Graph<T> {
      */
     @Override
     public Vertex<T> addVertex(T value) {
-        if (value == null) throw new NullPointerException();
+        if (value == null) {
+            throw new NullPointerException();
+        }
 
         Vertex<T> vertex = new Vertex<>(value);
 
-        adjacencyList.put(vertex, new HashMap<>());
+        adjacencyList.put(vertex, new LinkedList<>());
         reversedAdjacencyList.put(vertex, new HashSet<>());
         vertexes.add(vertex);
 
@@ -67,7 +75,7 @@ public class AdjacecyListGraph<T> extends Graph<T> {
             throw new NullPointerException();
         }
 
-        adjacencyList.get(from).put(to, weight);
+        adjacencyList.get(from).add(new Edge<>(to, weight));
         reversedAdjacencyList.get(to).add(from);
     }
 
@@ -84,6 +92,26 @@ public class AdjacecyListGraph<T> extends Graph<T> {
     }
 
     /**
+     * Chang edge weight.
+     *
+     * @param from   The source vertex.
+     * @param to     The target vertex.
+     * @param weight New weight.
+     */
+    @Override
+    public void changeEdge(Vertex<T> from, Vertex<T> to, long weight) {
+        if (!vertexes.contains(from) || !vertexes.contains(to)) {
+            throw new IllegalArgumentException();
+        }
+        for (var edge : adjacencyList.get(from)) {
+            if (edge.getVertex() == to) {
+                edge.setDistance(weight);
+                break;
+            }
+        }
+    }
+
+    /**
      * Retrieves a list of edges originating from the specified vertex.
      *
      * @param vertex The vertex for which to retrieve edges.
@@ -91,12 +119,8 @@ public class AdjacecyListGraph<T> extends Graph<T> {
      */
     @Override
     public List<Edge<T>> getEdges(Vertex<T> vertex) {
-        ArrayList<Edge<T>> result = new ArrayList<>(adjacencyList.get(vertex).size());
 
-        for (var adjacencyVertex : adjacencyList.get(vertex).keySet()) {
-            result.add(new Edge<>(adjacencyVertex, adjacencyList.get(vertex).get(adjacencyVertex)));
-        }
-        return result;
+        return (List<Edge<T>>) adjacencyList.get(vertex).clone();
     }
 
     /**
@@ -106,6 +130,11 @@ public class AdjacecyListGraph<T> extends Graph<T> {
      * @param to   The target vertex to which the link points.
      */
     private void deleteLink(Vertex<T> from, Vertex<T> to) {
-        adjacencyList.get(from).remove(to);
+        for (var edge : adjacencyList.get(from)) {
+            if (edge.getVertex() == to) {
+                adjacencyList.get(from).remove(edge);
+                break;
+            }
+        }
     }
 }

@@ -117,6 +117,24 @@ public class AdjacencyMatrixGraph<T> extends Graph<T> {
     }
 
     /**
+     * Chang edge weight.
+     *
+     * @param from   The source vertex.
+     * @param to     The target vertex.
+     * @param weight New weight.
+     */
+    @Override
+    public void changeEdge(Vertex<T> from, Vertex<T> to, long weight) {
+
+        if (!vertexes.contains(from) || !vertexes.contains(to)) {
+            throw new IllegalArgumentException();
+        }
+        if (adjacencyMatrix.get(indexFromVertex.get(from)).get(indexFromVertex.get(to)) != 0) {
+            adjacencyMatrix.get(indexFromVertex.get(from)).set(indexFromVertex.get(to), weight);
+        }
+    }
+
+    /**
      * Retrieves a list of edges originating from the specified vertex.
      *
      * @param vertex The vertex for which to retrieve edges.

@@ -3,7 +3,6 @@ import nsu.ru.khamidullin.Graph;
 import nsu.ru.khamidullin.IncidenceMatrixGraph;
 import nsu.ru.khamidullin.Vertex;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -147,5 +146,26 @@ public class AdjacencyListGraphTest {
         assertEquals(1, graph.getEdges(first).size());
         assertEquals(1, graph.getEdges(second).size());
         assertEquals(0, graph.getEdges(three).size());
+    }
+
+    @Test
+    public void testChangeWeight() {
+        AdjacecyListGraph<Integer> graph = new AdjacecyListGraph<>();
+
+        var first = graph.addVertex(1);
+        var second = graph.addVertex(2);
+        var three = graph.addVertex(3);
+
+        graph.addEdge(first, second, 3);
+        graph.addEdge(first, three, 1);
+        graph.addEdge(second, three, 1);
+
+        graph.changeEdge(first, three, 100);
+
+        var sortedVertexes = graph.distanceSort(first);
+
+        assertSame(sortedVertexes.get(0), first);
+        assertSame(sortedVertexes.get(1), second);
+        assertSame(sortedVertexes.get(2), three);
     }
 }

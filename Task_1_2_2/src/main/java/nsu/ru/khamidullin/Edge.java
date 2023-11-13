@@ -61,7 +61,8 @@ public class Edge<T> implements Comparable<Edge<T>> {
      * Compares this edge to another edge based on their distances.
      *
      * @param o The other edge to compare to.
-     * @return 0 if the edges are the same, 1 if the distances are the same, or the result of the distance comparison.
+     * @return 0 if the edges are the same, 1 if the distances are the same,
+     * or the result of the distance comparison.
      */
     @Override
     public int compareTo(Edge<T> o) {
