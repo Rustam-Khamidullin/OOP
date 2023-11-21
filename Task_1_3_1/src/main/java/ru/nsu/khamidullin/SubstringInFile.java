@@ -1,9 +1,6 @@
 package ru.nsu.khamidullin;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +23,28 @@ public class SubstringInFile {
      * @param file      The path to the file to be searched.
      * @param substring The substring to search for in the file.
      * @return A list of positions (offsets) of the substring in the file. An empty list is returned
-     *         if the substring is not found or an error occurs during file processing.
+     * if the substring is not found or an error occurs during file processing.
      */
-    public static List<Long> findSubstringInFile(String file, String substring) {
+    public static List<Long> findSubstringInFile(
+            String file, String substring, boolean fromResources) {
         ArrayList<Long> result = new ArrayList<>();
-        try (
-                FileInputStream fileInputStream = new FileInputStream(file);
-                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
-                BufferedReader reader = new BufferedReader(inputStreamReader)
-        ) {
+
+        InputStream inputStream;
+        try {
+            if (fromResources) {
+                inputStream = SubstringInFile.class.getClassLoader().getResourceAsStream(file);
+            } else {
+                inputStream = new FileInputStream(file);
+            }
+            if (inputStream == null) {
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
+            return List.of();
+        }
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             int substringLength = substring.length();
             int bufferSize = substringLength;
@@ -72,7 +82,7 @@ public class SubstringInFile {
                 result.add(currentOffset);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return List.of();
         }
         return result;
     }
