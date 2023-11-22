@@ -1,6 +1,7 @@
 package ru.nsu.khamidullin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,7 +12,7 @@ import java.util.TreeMap;
  */
 public class CreditBook {
     private final String name;
-    private final Map<Subject, TreeMap<Integer, Mark>> creditBook;
+    private final Map<String, TreeMap<Integer, Mark>> creditBook;
 
     /**
      * Constructs a new {@code CreditBook} with the specified student name.
@@ -21,9 +22,6 @@ public class CreditBook {
     public CreditBook(String name) {
         this.name = name;
         creditBook = new HashMap<>();
-        for (var subject : Subject.values()) {
-            creditBook.put(subject, new TreeMap<>());
-        }
     }
 
     /**
@@ -33,8 +31,8 @@ public class CreditBook {
      * @param term    The term.
      * @param mark    The mark.
      */
-    public void putCreditBookRecord(Subject subject, int term, Mark mark) {
-        creditBook.get(subject).put(term, mark);
+    public void putCreditBookRecord(String subject, int term, Mark mark) {
+        creditBook.computeIfAbsent(subject, k -> new TreeMap<>()).put(term, mark);
     }
 
     /**
@@ -55,7 +53,7 @@ public class CreditBook {
 
             int lastTerm = marks.lastKey();
 
-            if (subject == Subject.QUALIFICATION_WORK) {
+            if (subject.equalsIgnoreCase("qualification work")) {
                 if (marks.get(lastTerm) != Mark.FIVE) {
                     return false;
                 }
@@ -116,7 +114,19 @@ public class CreditBook {
      *
      * @return A map of subjects to term-wise marks.
      */
-    public Map<Subject, TreeMap<Integer, Mark>> getCreditBook() {
-        return creditBook;
+    public List<CreditbookRecord> getCreditBook() {
+        return creditBook.entrySet().stream()
+                .flatMap(entry -> {
+                    String subject = entry.getKey();
+                    var termMarks = entry.getValue();
+
+                    return termMarks.entrySet().stream()
+                            .map(termMarkEntry -> new CreditbookRecord(subject, termMarkEntry.getKey(), termMarkEntry.getValue()));
+                })
+                .toList();
+
+    }
+
+    public record CreditbookRecord(String subject, int term, Mark mark) {
     }
 }
