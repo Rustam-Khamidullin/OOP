@@ -4,14 +4,23 @@ import java.util.Stack;
 
 public class Pow implements Operator {
     @Override
-    public void apply(Stack<Double> stack) throws IllegalArgumentException {
-        try {
-            var first = stack.pop();
-            var second = stack.pop();
+    public double apply(Stack<Double> stack) throws IllegalArgumentException {
+        double first;
+        double second;
 
-            stack.push(Math.pow(first, second));
+        try {
+            first = stack.pop();
+            second = stack.pop();
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Incorrect expression");
         }
+
+        double result = Math.pow(first, second);
+
+        if (!Double.isFinite(result)) {
+            throw new ArithmeticException("Incorrect pow argument");
+        }
+
+        return result;
     }
 }

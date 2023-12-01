@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class Pi implements Operator {
     @Override
-    public void apply(Stack<Double> stack) throws IllegalArgumentException {
-        stack.push(Math.PI);
+    public double apply(Stack<Double> stack) throws IllegalArgumentException {
+        return Math.PI;
     }
 }

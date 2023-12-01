@@ -12,5 +12,5 @@ public interface Operator {
      * @param stack The stack of numbers on which the operator is applied.
      * @throws IllegalArgumentException If the operator cannot be applied due to invalid stack state or other reasons.
      */
-    void apply(Stack<Double> stack) throws IllegalArgumentException;
+    double apply(Stack<Double> stack);
 }

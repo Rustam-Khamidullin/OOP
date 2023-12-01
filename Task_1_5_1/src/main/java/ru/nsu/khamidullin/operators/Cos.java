@@ -4,11 +4,15 @@ import java.util.Stack;
 
 public class Cos implements Operator {
     @Override
-    public void apply(Stack<Double> stack) throws IllegalArgumentException {
+    public double apply(Stack<Double> stack) {
+        double value;
+
         try {
-            stack.push(Math.cos(stack.pop()));
+            value = stack.pop();
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Incorrect expression");
         }
+
+        return Math.cos(value);
     }
 }

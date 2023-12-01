@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class E implements Operator {
     @Override
-    public void apply(Stack<Double> stack) throws IllegalArgumentException {
-        stack.push(Math.E);
+    public double apply(Stack<Double> stack) {
+        return Math.E;
     }
 }

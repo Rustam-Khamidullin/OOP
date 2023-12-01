@@ -4,7 +4,15 @@ import java.util.Stack;
 
 public class Sin implements Operator {
     @Override
-    public void apply(Stack<Double> stack) throws IllegalArgumentException {
-        stack.push(Math.sin(stack.pop()));
+    public double apply(Stack<Double> stack) throws IllegalArgumentException {
+        double value;
+
+        try {
+            value = stack.pop();
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Incorrect expression");
+        }
+
+        return Math.sin(value);
     }
 }

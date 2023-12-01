@@ -2,6 +2,7 @@ package ru.nsu.khamidullin;
 
 import ru.nsu.khamidullin.operators.Operator;
 import ru.nsu.khamidullin.operators.OperatorFactory;
+
 import java.util.Stack;
 
 /**
@@ -38,11 +39,7 @@ public class Calculator {
                     throw new IllegalArgumentException("Unknown function: " + token);
                 }
 
-                try {
-                    operator.apply(stack);
-                } catch (RuntimeException e) {
-                    throw new IllegalArgumentException("Error applying operator: " + token, e);
-                }
+                stack.push(operator.apply(stack));
             }
         }
 
