@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Cos operator.
+ */
 public class Cos implements Operator {
     @Override
     public double apply(Stack<Double> stack) {

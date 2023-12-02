@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Log operator.
+ */
 public class Log implements Operator {
     @Override
     public double apply(Stack<Double> stack) {

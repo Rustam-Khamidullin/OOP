@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Pow operator.
+ */
 public class Pow implements Operator {
     @Override
     public double apply(Stack<Double> stack) throws IllegalArgumentException {

@@ -1,9 +1,9 @@
 package ru.nsu.khamidullin;
 
+import java.util.Scanner;
+import java.util.Stack;
 import ru.nsu.khamidullin.operators.Operator;
 import ru.nsu.khamidullin.operators.OperatorFactory;
-
-import java.util.Stack;
 
 /**
  * A simple calculator that evaluates mathematical expressions in reverse Polish (postfix) notation.
@@ -47,6 +47,25 @@ public class Calculator {
             return stack.pop();
         } else {
             throw new IllegalArgumentException("Incorrect expression");
+        }
+    }
+
+    public static void main(String[] args) {
+        try (var scanner = new Scanner(System.in)) {
+            while (true) {
+                var expression = scanner.nextLine();
+
+                if (expression.isEmpty()) {
+                    break;
+                }
+
+                try {
+                    var result = calculate(expression);
+                    System.out.println(result);
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
     }
 }

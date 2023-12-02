@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Addition operator.
+ */
 public class Addition implements Operator {
     @Override
     public double apply(Stack<Double> stack) {

@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Multiplication operator.
+ */
 public class Multiplication implements Operator {
     @Override
     public double apply(Stack<Double> stack) {

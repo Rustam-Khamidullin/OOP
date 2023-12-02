@@ -7,7 +7,6 @@ import java.lang.reflect.Constructor;
  * It supports basic arithmetic operators (+, -, *, /) and custom operators specified by their class names.
  */
 public class OperatorFactory {
-
     private static final String PACKAGE = "ru.nsu.khamidullin.operators.";
 
     /**
@@ -17,22 +16,25 @@ public class OperatorFactory {
      * @return An instance of the corresponding {@link Operator} or {@code null} if the operator is unknown.
      */
     public static Operator createOperator(String operator) {
-        return switch (operator) {
-            case "+" -> new Addition();
-            case "-" -> new Subtraction();
-            case "*" -> new Multiplication();
-            case "/" -> new Division();
-            default -> {
+        switch (operator) {
+            case "+":
+                return new Addition();
+            case "-":
+                return new Subtraction();
+            case "*":
+                return new Multiplication();
+            case "/":
+                return new Division();
+            default:
                 operator = PACKAGE + operator.substring(0, 1).toUpperCase() + operator.substring(1).toLowerCase();
 
                 try {
                     Class<?> operatorClass = Class.forName(operator);
                     Constructor<?> constructor = operatorClass.getConstructor();
-                    yield (Operator) constructor.newInstance();
+                    return (Operator) constructor.newInstance();
                 } catch (Exception e) {
-                    yield null;
+                    return null;
                 }
-            }
-        };
+        }
     }
 }

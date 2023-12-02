@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Sqrt operator.
+ */
 public class Sqrt implements Operator {
     @Override
     public double apply(Stack<Double> stack) throws IllegalArgumentException {

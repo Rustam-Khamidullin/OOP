@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.operators;
 
 import java.util.Stack;
 
+/**
+ * Division operator.
+ */
 public class Division implements Operator {
     @Override
     public double apply(Stack<Double> stack) {
