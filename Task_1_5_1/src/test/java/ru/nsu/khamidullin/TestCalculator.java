@@ -1,7 +1,6 @@
 package ru.nsu.khamidullin;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.nsu.khamidullin.Calculator.calculate;
@@ -64,6 +63,7 @@ public class TestCalculator {
         String expression = "sqrt -4";
         assertThrows(ArithmeticException.class, () -> calculate(expression));
     }
+
     @Test
     public void testDivisionByZero() {
         String expression = "/ 1324 0";
@@ -97,6 +97,48 @@ public class TestCalculator {
     @Test
     public void testInvalidFunction() {
         String expression = "unknownFunction 2";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidAdditional() {
+        String expression = "+ 1";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidSubtraction() {
+        String expression = "- 1";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidMultiplication() {
+        String expression = "* 1";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidPow() {
+        String expression = "pow 1";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidSin() {
+        String expression = "sin";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidCos() {
+        String expression = "cos";
+        assertThrows(IllegalArgumentException.class, () -> calculate(expression));
+    }
+
+    @Test
+    public void testInvalidSqrt() {
+        String expression = "sqrt";
         assertThrows(IllegalArgumentException.class, () -> calculate(expression));
     }
 }

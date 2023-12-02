@@ -50,6 +50,10 @@ public class Calculator {
         }
     }
 
+    /**
+     * Main loop.
+     * @param args arent used.
+     */
     public static void main(String[] args) {
         try (var scanner = new Scanner(System.in)) {
             while (true) {
