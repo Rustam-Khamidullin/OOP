@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.nsu.khamidullin.TestCalculator" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-11-29T15:41:21" hostname="DESKTOP-1UJV64Q" time="0.045">
+  <properties/>
+  <testcase name="testSqrtNegative()" classname="ru.nsu.khamidullin.TestCalculator" time="0.024"/>
+  <testcase name="testLog()" classname="ru.nsu.khamidullin.TestCalculator" time="0.004"/>
+  <testcase name="testSqrtAddPow()" classname="ru.nsu.khamidullin.TestCalculator" time="0.002"/>
+  <testcase name="testCosDivide()" classname="ru.nsu.khamidullin.TestCalculator" time="0.002"/>
+  <testcase name="testInvalidFunction()" classname="ru.nsu.khamidullin.TestCalculator" time="0.001"/>
+  <testcase name="testSinAddSubtract()" classname="ru.nsu.khamidullin.TestCalculator" time="0.002"/>
+  <testcase name="testPowMultiply()" classname="ru.nsu.khamidullin.TestCalculator" time="0.001"/>
+  <testcase name="testInvalidExpression()" classname="ru.nsu.khamidullin.TestCalculator" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
