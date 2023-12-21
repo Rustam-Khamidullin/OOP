@@ -8,7 +8,8 @@ import org.kohsuke.args4j.Option;
  * Parses command-line arguments using Args4J library for the command-line note-taking application.
  *
  * <p>This class defines options and arguments for adding, removing, showing, and modifying the path
- * of the notebook file. It is used in conjunction with Args4J annotations to specify how command-line
+ * of the notebook file. It is used in conjunction with Args4J annotations to specify
+ * how command-line
  * arguments should be parsed.
  */
 public class NotebookParser {
