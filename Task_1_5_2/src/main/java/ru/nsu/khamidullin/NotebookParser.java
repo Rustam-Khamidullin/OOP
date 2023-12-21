@@ -14,6 +14,8 @@ public class NotebookParser {
     @Option(name = "-show", usage = "Show note list.")
     private boolean show;
 
+    @Option(name = "-path", usage = "Show note list.")
+    private boolean path;
     @Argument(metaVar = "arguments", usage = "Arguments fot the command.")
     private String[] arguments;
 
@@ -21,6 +23,7 @@ public class NotebookParser {
         add = false;
         remove = false;
         show = false;
+        path = false;
     }
 
     public int cntOptions() {
@@ -32,6 +35,9 @@ public class NotebookParser {
             cnt++;
         }
         if (show) {
+            cnt++;
+        }
+        if (path) {
             cnt++;
         }
         return cnt;
@@ -48,6 +54,10 @@ public class NotebookParser {
 
     public boolean isShow() {
         return show;
+    }
+
+    public boolean isPath() {
+        return path;
     }
 
     public String[] getArguments() {
