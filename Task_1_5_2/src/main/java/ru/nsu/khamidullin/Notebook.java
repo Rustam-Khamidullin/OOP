@@ -162,8 +162,7 @@ public class Notebook {
      *
      * @param name The name of the new note.
      * @param text The text content of the new note.
-     * @return {@code true} if the note was added successfully, {@code false} if a note with
-     * the same name already exists.
+     * @return true if the note was added successfully, else false.
      * @throws IOException If an error occurs while adding the note.
      */
     public boolean addNote(String name, String text) throws IOException {
@@ -179,8 +178,7 @@ public class Notebook {
      * Removes a note from the notebook by name.
      *
      * @param name The name of the note to be removed.
-     * @return {@code true} if the note was removed successfully, {@code false} if the note
-     * does not exist.
+     * @return true if the note was removed successfully, else false.
      * @throws IOException If an error occurs while removing the note.
      */
     public boolean removeNote(String name) throws IOException {
