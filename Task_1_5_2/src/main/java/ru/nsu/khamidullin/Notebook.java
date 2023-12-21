@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.*;
 import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Simple note-taking application with basic CRUD operations and filtering capabilities.
@@ -67,7 +65,7 @@ public class Notebook {
      * @throws IOException If an error occurs while reading or loading the properties file,
      *                     or if the specified key is not found in the file.
      */
-    private static String getPropertiesPath() throws IOException {
+    public static String getPropertiesPath() throws IOException {
         Properties properties = new Properties();
 
         try (FileInputStream input = new FileInputStream(PROPERTIES_PATH)) {
@@ -101,25 +99,32 @@ public class Notebook {
     }
 
     /**
-     * Prints all notes in the notebook, sorted by creation timestamp.
+     * Get all notes in the notebook, sorted by creation timestamp.
      */
-    public void printSortedNotes() {
-        notes.entrySet().stream()
+    public List<String> getSortedNotes() {
+        return notes.entrySet().stream()
                 .sorted(Comparator.comparing(e -> e.getValue().createTime()))
                 .map(e -> e.getKey() + ": " + e.getValue().text())
-                .forEach(System.out::println);
+                .toList();
     }
 
     /**
-     * Prints notes in the notebook, filtered by date range and containing specific keywords,
+     * Print all notes in the notebook, sorted by creation timestamp.
+     */
+    public void printSortedNotes() {
+        getSortedNotes().forEach(System.out::println);
+    }
+
+    /**
+     * Get notes in the notebook, filtered by date range and containing specific keywords,
      * and sorted by creation timestamp.
      *
      * @param from     The start of the date range.
      * @param to       The end of the date range.
      * @param contains Keywords to filter notes by.
      */
-    public void printSortedFilteredNotes(ZonedDateTime from, ZonedDateTime to, String[] contains) {
-        notes.entrySet().stream()
+    public List<String> getSortedFilteredNotes(ZonedDateTime from, ZonedDateTime to, String[] contains) {
+        return notes.entrySet().stream()
                 .filter(entry -> {
                     var date = entry.getValue().createTime();
                     if (date.isAfter(to) || date.isBefore(from)) {
@@ -134,7 +139,19 @@ public class Notebook {
                 })
                 .sorted(Comparator.comparing(e -> e.getValue().createTime()))
                 .map(e -> e.getKey() + ": " + e.getValue().text())
-                .forEach(System.out::println);
+                .toList();
+    }
+
+    /**
+     * Print notes in the notebook, filtered by date range and containing specific keywords,
+     * and sorted by creation timestamp.
+     *
+     * @param from     The start of the date range.
+     * @param to       The end of the date range.
+     * @param contains Keywords to filter notes by.
+     */
+    public void printSortedFilteredNotes(ZonedDateTime from, ZonedDateTime to, String[] contains) {
+        getSortedFilteredNotes(from, to, contains).forEach(System.out::println);
     }
 
     /**
@@ -183,5 +200,9 @@ public class Notebook {
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.writeValue(writer, notes);
         }
+    }
+
+    public Map<String, Note> getNotes() {
+        return notes;
     }
 }
