@@ -6,9 +6,21 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * Handles command-line options and arguments to perform actions on a {@code Notebook}.
+ *
+ * <p>This class interprets command-line options and arguments to perform actions on a {@code Notebook},
+ * such as changing the notebook file path, adding, removing, or displaying notes. It interacts with the
+ * {@code Notebook} class and utilizes the {@code NotebookParser} to parse command-line inputs.
+ */
 public class CmdLineHandler {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy H:m");
 
+    /**
+     * Handles the provided {@code NotebookParser} and executes corresponding actions on the {@code Notebook}.
+     *
+     * @param notebookParser The {@code NotebookParser} instance containing parsed command-line options and arguments.
+     */
     public static void handle(NotebookParser notebookParser) {
         if (notebookParser.cntOptions() != 1) {
             System.out.println("Incorrect options usage. Use 1 option.");
