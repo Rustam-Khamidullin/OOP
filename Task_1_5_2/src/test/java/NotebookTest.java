@@ -3,12 +3,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.nsu.khamidullin.Main;
 import ru.nsu.khamidullin.Notebook;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
@@ -17,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
  * Test class.
  */
 public class NotebookTest {
+    /**
+     * Clean up.
+     */
     @AfterAll
     @BeforeAll
     public static void cleanUp() throws IOException {
