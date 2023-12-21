@@ -122,7 +122,11 @@ public class Notebook {
      * @param to       The end of the date range.
      * @param contains Keywords to filter notes by.
      */
-    public List<String> getSortedFilteredNotes(ZonedDateTime from, ZonedDateTime to, String[] contains) {
+    public List<String> getSortedFilteredNotes(
+            ZonedDateTime from,
+            ZonedDateTime to,
+            String[] contains
+    ) {
         return notes.entrySet().stream()
                 .filter(entry -> {
                     var date = entry.getValue().createTime();
