@@ -4,11 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.nsu.khamidullin.StreamSolution.findPrimeStream;
 
-import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Random;
-
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class.
