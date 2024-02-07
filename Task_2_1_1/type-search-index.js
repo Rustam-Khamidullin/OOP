@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.khamidullin","l":"ConsistentSolution"},{"p":"ru.nsu.khamidullin","l":"ParallelSolution"},{"p":"ru.nsu.khamidullin","l":"PrimeChecker"},{"p":"ru.nsu.khamidullin","l":"StreamSolution"}]
