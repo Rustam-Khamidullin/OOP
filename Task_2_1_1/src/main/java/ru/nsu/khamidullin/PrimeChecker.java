@@ -1,7 +1,8 @@
 package ru.nsu.khamidullin;
 
 /**
- * The {@code PrimeChecker} class provides a utility for determining whether a given integer is a prime number.
+ * The {@code PrimeChecker} class provides a utility for determining whether
+ * a given integer is a prime number.
  */
 public class PrimeChecker {
     /**
