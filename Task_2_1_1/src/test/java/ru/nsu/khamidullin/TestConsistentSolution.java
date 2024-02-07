@@ -35,6 +35,9 @@ public class TestConsistentSolution {
         assertFalse(result);
     }
 
+    /**
+     * Large test.
+     */
     public void findPrimeTestLargeFalse() {
         int[] array = new int[1000000];
         Arrays.fill(array, 2147117569);

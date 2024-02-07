@@ -1,13 +1,13 @@
 package ru.nsu.khamidullin;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.nsu.khamidullin.ParallelSolution.findPrimeParallel;
+
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static ru.nsu.khamidullin.ParallelSolution.findPrimeParallel;
 
 /**
  * Test class.
@@ -36,6 +36,9 @@ public class TestParallelSolution {
         assertFalse(result);
     }
 
+    /**
+     * Large test.
+     */
     public void findPrimeTestLargeFalse() {
         int[] array = new int[1000000];
         Arrays.fill(array, 2147117569);
