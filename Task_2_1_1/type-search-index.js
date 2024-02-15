@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.khamidullin","l":"ConsistentSolution"},{"p":"ru.nsu.khamidullin","l":"ParallelSolution"},{"p":"ru.nsu.khamidullin","l":"PrimeChecker"},{"p":"ru.nsu.khamidullin","l":"StreamSolution"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.khamidullin.prime","l":"ConsistentPrimeFinder"},{"p":"ru.nsu.khamidullin.prime","l":"ParallelPrimeFinder"},{"p":"ru.nsu.khamidullin.prime","l":"PrimeFinder"},{"p":"ru.nsu.khamidullin.prime","l":"StreamPrimeFinder"}]
