@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 /**
  * The {@code StreamPrimeFinder} class provides a solution for finding prime numbers
- * within an array of integers using Java streams in parallel. It extends the {@link PrimeFinder} abstract class.
+ * within an array of integers using Java streams in parallel.
+ * It extends the {@link PrimeFinder} abstract class.
  */
 public class StreamPrimeFinder extends PrimeFinder {
     private final int threadNumber;
@@ -24,14 +25,17 @@ public class StreamPrimeFinder extends PrimeFinder {
     }
 
     /**
-     * Checks if there is at least one prime number in the specified array using Java streams in parallel.
+     * Checks if there is at least one prime number in the specified array
+     * using Java streams in parallel.
      *
      * @param array an array of integers to be checked for the presence of prime numbers.
      * @return {@code true} if at least one prime number is present, {@code false} otherwise.
      */
     @Override
     public boolean hasPrime(int[] array) {
-        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", String.valueOf(threadNumber));
+        System.setProperty(
+                "java.util.concurrent.ForkJoinPool.common.parallelism"
+                , String.valueOf(threadNumber));
 
         try {
             return Arrays.stream(array)

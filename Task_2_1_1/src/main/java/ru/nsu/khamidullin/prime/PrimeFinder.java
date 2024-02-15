@@ -1,10 +1,11 @@
 package ru.nsu.khamidullin.prime;
 
 /**
- * The abstract class PrimeFinder provides methods for determining the presence of prime numbers in an array
- * and checking whether a given integer is prime.
+ * The abstract class PrimeFinder provides methods for determining the presence of prime numbers
+ * in an array and checking whether a given integer is prime.
  *
- * <p>The {@code hasPrime} method checks if there is at least one prime number in the specified array.
+ * <p>The {@code hasPrime} method checks if there is at least one prime
+ * number in the specified array.
  * The {@code isPrime} method checks if a given integer is a prime number.</p>
  */
 public abstract class PrimeFinder {
