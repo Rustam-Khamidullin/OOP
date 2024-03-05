@@ -1,0 +1,15 @@
+{
+  "bakersCookingTime": [
+    1000,
+    1000,
+    1000,
+    1000,
+    1000
+  ],
+  "deliveriesCapacity": [
+    1,
+    2,
+    3
+  ],
+  "storageCapacity": 10
+}
