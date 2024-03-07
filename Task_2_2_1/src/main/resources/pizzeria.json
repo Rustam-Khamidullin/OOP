@@ -1,15 +1,11 @@
 {
   "bakersCookingTime": [
     1000,
-    1000,
-    1000,
-    1000,
-    1000
+    2000
   ],
   "deliveriesCapacity": [
-    1,
-    2,
-    3
+    3,
+    2
   ],
   "storageCapacity": 10
 }

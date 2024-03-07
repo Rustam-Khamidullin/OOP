@@ -6,19 +6,18 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Pizzeria pizzeria;
         try {
-            pizzeria = new Pizzeria();
+            pizzeria = new Pizzeria(100000);
         } catch (IllegalAccessException | IOException e) {
             System.out.println("Невверный формат pizzeria.json");
             return;
         }
         
-        pizzeria.runPizzeria();
+        Thread pizzeriaThread = new Thread(pizzeria);
+        pizzeriaThread.start();
 
-        int id = 1;
-        while (true) {
-            pizzeria.addOrder(id++);
 
-            Thread.sleep(500);
+        for (int i = 1; i < 150; i++) {
+            pizzeria.addOrder(i);
         }
     }
 }

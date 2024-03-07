@@ -56,4 +56,13 @@ public class BlockingQueue<T> {
             lock.unlock();
         }
     }
+
+    public boolean isEmpty() {
+        lock.lock();
+        try {
+            return queue.isEmpty();
+        } finally {
+            lock.unlock();
+        }
+    }
 }

@@ -4,16 +4,18 @@ public class Backer implements Runnable {
     private final BlockingQueue<Integer> orders;
     private final BlockingQueue<Integer> storage;
     private final int cookingTime;
+    private boolean isRunning;
 
     public Backer(int cookingTime, BlockingQueue<Integer> orders, BlockingQueue<Integer> storage) {
         this.cookingTime = cookingTime;
         this.orders = orders;
         this.storage = storage;
+        this.isRunning = true;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (isRunning || !orders.isEmpty()) {
             try {
                 int order = orders.pop();
                 System.out.printf("%d заказ готовится\n", order);
@@ -27,5 +29,9 @@ public class Backer implements Runnable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void stopWorking() {
+        this.isRunning = false;
     }
 }
