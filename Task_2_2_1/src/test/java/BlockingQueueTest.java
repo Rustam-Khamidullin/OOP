@@ -51,6 +51,7 @@ public class BlockingQueueTest {
 
     /**
      * Test class.
+     *
      * @throws InterruptedException yes.
      */
     @RepeatedTest(100)

@@ -3,8 +3,10 @@ package ru.nsu.khamidullin.pizza;
 import java.util.List;
 
 /**
- * The {@code PizzeriaConfiguration} class represents the configuration parameters for a simulated pizzeria.
- * It includes information such as bakers' cooking times, delivery capacities, and storage capacity.
+ * The {@code PizzeriaConfiguration} class represents the configuration parameters
+ * for a simulated pizzeria.
+ * It includes information such as bakers' cooking times, delivery capacities,
+ * and storage capacity.
  */
 public class PizzeriaConfiguration {
     private List<Integer> bakersCookingTime;

@@ -3,10 +3,13 @@ package ru.nsu.khamidullin.pizza;
 import java.util.Queue;
 
 /**
- * The {@code PizzeriaState} class represents the state of a pizzeria, including the current orders and storage.
- * It encapsulates two queues, one for orders and one for storage, to manage the flow of pizza orders and delivery.
- * This class is designed to be used in a multi-threaded environment, potentially by different components such as
- * bakers, deliverymen, and other parts of a pizzeria simulation.
+ * The {@code PizzeriaState} class represents the state of a pizzeria,
+ * including the current orders and storage.
+ * It encapsulates two queues, one for orders and one for storage,
+ * to manage the flow of pizza orders and delivery.
+ * This class is designed to be used in a multi-threaded environment,
+ * potentially by different components such as bakers, deliverymen,
+ * and other parts of a pizzeria simulation.
  */
 public class PizzeriaState {
     private Queue<Integer> orders;
