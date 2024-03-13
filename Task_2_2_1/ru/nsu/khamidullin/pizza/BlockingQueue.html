@@ -129,9 +129,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - The type of elements stored in the queue.</dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">BlockingQueue&lt;T&gt;</span>
 extends java.lang.Object</pre>
+<div class="block">The <code>BlockingQueue</code> class represents a thread-safe blocking queue implementation.
+ It uses explicit locks and conditions to ensure safe and efficient multi-threaded access to the underlying queue.</div>
 </li>
 </ul>
 </div>
@@ -153,11 +159,15 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">BlockingQueue</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a blocking queue with the default maximum capacity (Integer.MAX_VALUE).</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">BlockingQueue</a></span>&#8203;(int&nbsp;capacity)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a blocking queue with the specified maximum capacity.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -180,32 +190,44 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCapacity()">getCapacity</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the maximum capacity of the blocking queue.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.Queue&lt;<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueue()">getQueue</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the internal queue.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEmpty()">isEmpty</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Checks if the queue is empty.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pop()">pop</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Removes and returns an element from the queue.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#push(T)">push</a></span>&#8203;(<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Adds an element to the queue.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueue(java.util.Queue)">setQueue</a></span>&#8203;(java.util.Queue&lt;<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&gt;&nbsp;queue)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the internal queue to the specified queue.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,6 +260,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>BlockingQueue</h4>
 <pre>public&nbsp;BlockingQueue()</pre>
+<div class="block">Constructs a blocking queue with the default maximum capacity (Integer.MAX_VALUE).</div>
 </li>
 </ul>
 <a id="&lt;init&gt;(int)">
@@ -247,6 +270,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>BlockingQueue</h4>
 <pre>public&nbsp;BlockingQueue&#8203;(int&nbsp;capacity)</pre>
+<div class="block">Constructs a blocking queue with the specified maximum capacity.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>capacity</code> - The maximum capacity of the blocking queue.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -269,9 +297,12 @@ extends java.lang.Object</pre>
 <h4>push</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;push&#8203;(<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&nbsp;value)
           throws java.lang.InterruptedException</pre>
+<div class="block">Adds an element to the queue. Blocks if the queue is full.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - The element to be added to the queue.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code>java.lang.InterruptedException</code> - If the operation is interrupted while waiting.</dd>
 </dl>
 </li>
 </ul>
@@ -283,9 +314,12 @@ extends java.lang.Object</pre>
 <h4>pop</h4>
 <pre class="methodSignature">public&nbsp;<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&nbsp;pop()
       throws java.lang.InterruptedException</pre>
+<div class="block">Removes and returns an element from the queue. Blocks if the queue is empty.</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The element removed from the queue.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code>java.lang.InterruptedException</code> - If the operation is interrupted while waiting.</dd>
 </dl>
 </li>
 </ul>
@@ -296,6 +330,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isEmpty</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isEmpty()</pre>
+<div class="block">Checks if the queue is empty.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if the queue is empty, <code>false</code> otherwise.</dd>
+</dl>
 </li>
 </ul>
 <a id="setQueue(java.util.Queue)">
@@ -305,6 +344,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setQueue</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setQueue&#8203;(java.util.Queue&lt;<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&gt;&nbsp;queue)</pre>
+<div class="block">Sets the internal queue to the specified queue.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>queue</code> - The new queue to set.</dd>
+</dl>
 </li>
 </ul>
 <a id="getQueue()">
@@ -314,6 +358,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getQueue</h4>
 <pre class="methodSignature">public&nbsp;java.util.Queue&lt;<a href="BlockingQueue.html" title="type parameter in BlockingQueue">T</a>&gt;&nbsp;getQueue()</pre>
+<div class="block">Gets the internal queue.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The internal queue.</dd>
+</dl>
 </li>
 </ul>
 <a id="getCapacity()">
@@ -323,6 +372,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getCapacity</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getCapacity()</pre>
+<div class="block">Gets the maximum capacity of the blocking queue.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The maximum capacity of the blocking queue.</dd>
+</dl>
 </li>
 </ul>
 </li>
