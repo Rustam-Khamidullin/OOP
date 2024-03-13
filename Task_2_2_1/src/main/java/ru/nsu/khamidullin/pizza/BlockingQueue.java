@@ -10,7 +10,7 @@ public class BlockingQueue<T> {
     private final Lock lock = new ReentrantLock();
     private final Condition notFull = lock.newCondition();
     private final Condition notEmpty = lock.newCondition();
-    private final Queue<T> queue = new LinkedList<>();
+    private Queue<T> queue = new LinkedList<>();
     private final int capacity;
 
     public BlockingQueue() {
@@ -48,15 +48,6 @@ public class BlockingQueue<T> {
         }
     }
 
-    public int size() {
-        lock.lock();
-        try {
-            return queue.size();
-        } finally {
-            lock.unlock();
-        }
-    }
-
     public boolean isEmpty() {
         lock.lock();
         try {
@@ -64,5 +55,27 @@ public class BlockingQueue<T> {
         } finally {
             lock.unlock();
         }
+    }
+
+    public void setQueue(Queue<T> queue) {
+        lock.lock();
+        try {
+            this.queue = queue;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public Queue<T> getQueue() {
+        lock.lock();
+        try {
+            return queue;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

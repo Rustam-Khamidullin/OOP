@@ -1,38 +1,50 @@
 package ru.nsu.khamidullin.pizza;
 
-public class Deliveryman implements Runnable {
+/**
+ * The {@code Deliveryman} class represents a thread simulating a deliveryman in a pizzeria.
+ * It processes pizza deliveries by retrieving pizzas from the storage and delivering them within a specified capacity.
+ */
+public class Deliveryman extends Thread {
+
     private static final int DELIVERY_TIME = 5000;
     private final BlockingQueue<Integer> storage;
     private final int capacity;
-    private boolean isRunning;
 
+    /**
+     * Constructs a Deliveryman with the specified delivery capacity and storage queue.
+     *
+     * @param capacity The maximum number of pizza deliveries the deliveryman can make in one round.
+     * @param storage  The queue containing pizzas to be delivered.
+     */
     public Deliveryman(int capacity, BlockingQueue<Integer> storage) {
         this.capacity = capacity;
         this.storage = storage;
-        this.isRunning = true;
     }
 
+    /**
+     * Runs the deliveryman thread, continuously processing pizza deliveries by retrieving from storage and delivering.
+     */
     @Override
     public void run() {
-        while (isRunning || !storage.isEmpty()) {
+        while (!interrupted()) {
+            int current = 0;
+            do {
+                int id;
+                try {
+                    id = storage.pop();
+                } catch (InterruptedException e) {
+                    return;
+                }
+
+                System.out.printf("Заказ %d доставляется\n", id);
+                current++;
+            } while (current < capacity && !storage.isEmpty() && !interrupted());
+
             try {
-                int current = 0;
-                do {
-                    int id = storage.pop();
-                    System.out.printf("Заказ %d доставляется\n", id);
-                    current++;
-                } while (current < capacity && !storage.isEmpty());
-
                 Thread.sleep(DELIVERY_TIME);
-
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InterruptedException ignored) {
+                return;
             }
         }
     }
-
-    public void stopWorking() {
-        this.isRunning = false;
-    }
 }
-
