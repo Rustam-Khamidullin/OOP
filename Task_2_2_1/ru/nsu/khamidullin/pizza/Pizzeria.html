@@ -144,7 +144,8 @@ extends java.lang.Thread</pre>
 <div class="block">The <code>Pizzeria</code> class represents a simulated pizzeria with bakers and deliverymen,
  handling pizza orders and deliveries.
  <p>
- It manages the pizzeria's configuration, orders, and storage using <code>PizzeriaConfiguration</code>,
+ It manages the pizzeria's configuration, orders,
+ and storage using <code>PizzeriaConfiguration</code>,
  <code>BlockingQueue</code>, and <code>PizzeriaState</code>.
  </p>
  <p>
@@ -314,7 +315,8 @@ extends java.lang.Thread</pre>
 <h4>run</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;run()</pre>
 <div class="block">Runs the pizzeria simulation. Starts working threads, runs for the specified duration,
- stops the working threads, prints a message indicating the end of work, and saves the state to a file.</div>
+ stops the working threads, prints a message indicating the end of work,
+ and saves the state to a file.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>run</code>&nbsp;in interface&nbsp;<code>java.lang.Runnable</code></dd>
@@ -336,7 +338,8 @@ extends java.lang.Thread</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - The identifier of the pizza order.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - If the thread is interrupted while adding the order to the queue.</dd>
+<dd><code>java.lang.InterruptedException</code> - If the thread is interrupted
+                              while adding the order to the queue.</dd>
 </dl>
 </li>
 </ul>
