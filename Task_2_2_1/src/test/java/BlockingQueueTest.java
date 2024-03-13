@@ -49,6 +49,10 @@ public class BlockingQueueTest {
         Assertions.assertEquals(3.14, newQueue.pop());
     }
 
+    /**
+     * Test class.
+     * @throws InterruptedException yes.
+     */
     @RepeatedTest(100)
     public void testMultipleThreads() throws InterruptedException {
         BlockingQueue<Integer> blockingQueue = new BlockingQueue<>(3);

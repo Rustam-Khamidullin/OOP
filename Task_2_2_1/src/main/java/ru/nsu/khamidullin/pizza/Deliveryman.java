@@ -2,7 +2,8 @@ package ru.nsu.khamidullin.pizza;
 
 /**
  * The {@code Deliveryman} class represents a thread simulating a deliveryman in a pizzeria.
- * It processes pizza deliveries by retrieving pizzas from the storage and delivering them within a specified capacity.
+ * It processes pizza deliveries by retrieving pizzas from the storage and delivering
+ * them within a specified capacity.
  */
 public class Deliveryman extends Thread {
 
@@ -13,7 +14,8 @@ public class Deliveryman extends Thread {
     /**
      * Constructs a Deliveryman with the specified delivery capacity and storage queue.
      *
-     * @param capacity The maximum number of pizza deliveries the deliveryman can make in one round.
+     * @param capacity The maximum number of pizza deliveries
+     *                 the deliveryman can make in one round.
      * @param storage  The queue containing pizzas to be delivered.
      */
     public Deliveryman(int capacity, BlockingQueue<Integer> storage) {
@@ -22,7 +24,8 @@ public class Deliveryman extends Thread {
     }
 
     /**
-     * Runs the deliveryman thread, continuously processing pizza deliveries by retrieving from storage and delivering.
+     * Runs the deliveryman thread, continuously processing pizza deliveries
+     * by retrieving from storage and delivering.
      */
     @Override
     public void run() {

@@ -14,7 +14,8 @@ import java.util.List;
  * The {@code Pizzeria} class represents a simulated pizzeria with bakers and deliverymen,
  * handling pizza orders and deliveries.
  * <p>
- * It manages the pizzeria's configuration, orders, and storage using {@code PizzeriaConfiguration},
+ * It manages the pizzeria's configuration, orders,
+ * and storage using {@code PizzeriaConfiguration},
  * {@code BlockingQueue}, and {@code PizzeriaState}.
  * </p>
  * <p>
@@ -41,7 +42,7 @@ public class Pizzeria extends Thread {
      * Constructs a new {@code Pizzeria} instance with the specified working time.
      *
      * @param workingTime The duration the pizzeria will be operational (in milliseconds).
-     * @throws IOException           If an I/O error occurs while loading configuration or orders.
+     * @throws IOException            If an I/O error occurs while loading configuration or orders.
      * @throws IllegalAccessException If the loaded configuration is invalid.
      */
     public Pizzeria(int workingTime) throws IOException, IllegalAccessException {
@@ -64,7 +65,8 @@ public class Pizzeria extends Thread {
 
     /**
      * Runs the pizzeria simulation. Starts working threads, runs for the specified duration,
-     * stops the working threads, prints a message indicating the end of work, and saves the state to a file.
+     * stops the working threads, prints a message indicating the end of work,
+     * and saves the state to a file.
      */
     @Override
     public void run() {
@@ -95,7 +97,8 @@ public class Pizzeria extends Thread {
      * Adds a pizza order to the pizzeria.
      *
      * @param id The identifier of the pizza order.
-     * @throws InterruptedException If the thread is interrupted while adding the order to the queue.
+     * @throws InterruptedException If the thread is interrupted
+     *                              while adding the order to the queue.
      */
     public void addOrder(int id) throws InterruptedException {
         orders.push(id);
@@ -114,9 +117,11 @@ public class Pizzeria extends Thread {
     }
 
     /**
-     * Stops the working threads for bakers and deliverymen by interrupting them and waiting for their completion.
+     * Stops the working threads for bakers and deliverymen by interrupting them and
+     * waiting for their completion.
      *
-     * @throws InterruptedException If any interruption occurs while waiting for threads to complete.
+     * @throws InterruptedException If any interruption occurs while waiting for
+     *                              threads to complete.
      */
     private void stopWorking() throws InterruptedException {
         for (var bakerThread : bakerThreads) {
@@ -134,7 +139,8 @@ public class Pizzeria extends Thread {
     }
 
     /**
-     * Loads orders and initializes the orders and storage queues based on the stored pizzeria state.
+     * Loads orders and initializes the orders and storage queues based
+     * on the stored pizzeria state.
      *
      * @throws IOException If an I/O error occurs during the loading process.
      */
@@ -179,14 +185,16 @@ public class Pizzeria extends Thread {
     /**
      * Reads and sets the pizzeria configuration from a configuration file.
      *
-     * @throws IOException            If an I/O error occurs during the configuration loading process.
+     * @throws IOException            If an I/O error occurs during the configuration
+     *                                loading process.
      * @throws IllegalAccessException If the loaded configuration is invalid or incomplete.
      */
     private void setPizzeriaConfiguration() throws IOException, IllegalAccessException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         PizzeriaConfiguration pizzeriaConfiguration;
-        try (InputStream fileInputStream = ClassLoader.getSystemResourceAsStream(PIZZERIA_CONFIGURATION)) {
+        try (InputStream fileInputStream =
+                     ClassLoader.getSystemResourceAsStream(PIZZERIA_CONFIGURATION)) {
             pizzeriaConfiguration =
                     objectMapper.readValue(fileInputStream, PizzeriaConfiguration.class);
         }

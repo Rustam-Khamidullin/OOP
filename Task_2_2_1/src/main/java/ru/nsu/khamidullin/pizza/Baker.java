@@ -23,7 +23,8 @@ public class Baker extends Thread {
     }
 
     /**
-     * Runs the baker thread, continuously processing pizza orders by cooking and transferring them to storage.
+     * Runs the baker thread, continuously processing pizza orders by cooking
+     * and transferring them to storage.
      */
     @Override
     public void run() {

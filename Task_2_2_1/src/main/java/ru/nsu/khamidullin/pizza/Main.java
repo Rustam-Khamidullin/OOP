@@ -4,7 +4,8 @@ import java.io.IOException;
 
 /**
  * The {@code Main} class serves as the entry point for the pizzeria simulation program.
- * It creates and runs a pizzeria instance, adds orders to it, and waits for the simulation to complete.
+ * It creates and runs a pizzeria instance, adds orders to it, and waits
+ * for the simulation to complete.
  */
 public class Main {
     /**
