@@ -1,9 +1,9 @@
 package ru.nsu.khamidullin.pizza;
 
+import java.io.IOException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 
 /**
  * The {@code Main} class serves as the entry point for the pizzeria simulation program.

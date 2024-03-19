@@ -8,7 +8,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The {@code BlockingQueue} class represents a thread-safe blocking queue implementation.
- * It uses explicit locks and conditions to ensure safe and efficient multi-threaded access to the underlying queue.
+ * It uses explicit locks and conditions to ensure safe and efficient
+ * multi-threaded access to the underlying queue.
  *
  * @param <T> The type of elements stored in the queue.
  */

@@ -39,7 +39,7 @@ public class Baker extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            logger.info("%d заказ готовится\n".formatted(order));
+            logger.info("order заказ готовится\n");
 
             try {
                 Thread.sleep(cookingTime);
@@ -52,10 +52,10 @@ public class Baker extends Thread {
                     throw new RuntimeException("Baker was interrupted second time");
                 }
 
-                logger.info("%d заказ не был преготовлен\n".formatted(order));
+                logger.info("order заказ не был преготовлен\n");
                 return;
             }
-            logger.info("%d заказ перемещен на склад\n".formatted(order));
+            logger.info("order заказ перемещен на склад\n");
         }
     }
 }
