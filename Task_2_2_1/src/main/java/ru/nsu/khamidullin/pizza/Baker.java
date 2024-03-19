@@ -1,10 +1,14 @@
 package ru.nsu.khamidullin.pizza;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 /**
  * The {@code Baker} class represents a thread simulating a baker in a pizzeria.
  * It processes pizza orders by cooking them and transferring them to the storage queue.
  */
 public class Baker extends Thread {
+    private static final Logger logger = LogManager.getLogger(Baker.class);
     private final BlockingQueue<Integer> orders;
     private final BlockingQueue<Integer> storage;
     private final int cookingTime;
@@ -35,7 +39,7 @@ public class Baker extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            System.out.printf("%d заказ готовится\n", order);
+            logger.info("%d заказ готовится\n".formatted(order));
 
             try {
                 Thread.sleep(cookingTime);
@@ -48,10 +52,10 @@ public class Baker extends Thread {
                     throw new RuntimeException("Baker was interrupted second time");
                 }
 
-                System.out.printf("%d заказ не был преготовлен\n", order);
+                logger.info("%d заказ не был преготовлен\n".formatted(order));
                 return;
             }
-            System.out.printf("%d заказ перемещен на склад\n", order);
+            logger.info("%d заказ перемещен на склад\n".formatted(order));
         }
     }
 }

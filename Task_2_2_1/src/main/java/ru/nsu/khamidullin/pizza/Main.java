@@ -1,5 +1,8 @@
 package ru.nsu.khamidullin.pizza;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 /**
@@ -8,6 +11,8 @@ import java.io.IOException;
  * for the simulation to complete.
  */
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     /**
      * The main method of the program.
      *
@@ -18,22 +23,18 @@ public class Main {
         Pizzeria pizzeria;
 
         try {
-            // Create a pizzeria instance with a working time of 20,000 milliseconds
             pizzeria = new Pizzeria(20000);
         } catch (IllegalAccessException | IOException e) {
-            System.out.println("Invalid format in pizzeria.json");
+            logger.error("Invalid format in pizzeria.json");
             return;
         }
 
-        // Start the pizzeria simulation
         pizzeria.start();
 
-        // Add orders to the pizzeria
         for (int i = 1; i <= 41; i++) {
             pizzeria.addOrder(i);
         }
 
-        // Wait for the pizzeria simulation to complete
         pizzeria.join();
     }
 }

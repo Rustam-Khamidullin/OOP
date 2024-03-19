@@ -1,12 +1,15 @@
 package ru.nsu.khamidullin.pizza;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 /**
  * The {@code Deliveryman} class represents a thread simulating a deliveryman in a pizzeria.
  * It processes pizza deliveries by retrieving pizzas from the storage and delivering
  * them within a specified capacity.
  */
 public class Deliveryman extends Thread {
-
+    private static final Logger logger = LogManager.getLogger(Deliveryman.class);
     private static final int DELIVERY_TIME = 5000;
     private final BlockingQueue<Integer> storage;
     private final int capacity;
@@ -39,7 +42,7 @@ public class Deliveryman extends Thread {
                     return;
                 }
 
-                System.out.printf("Заказ %d доставляется\n", id);
+                logger.info("Заказ %d доставляется\n".formatted(id));
                 current++;
             } while (current < capacity && !storage.isEmpty() && !interrupted());
 

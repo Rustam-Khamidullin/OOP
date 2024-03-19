@@ -1,6 +1,9 @@
 package ru.nsu.khamidullin.pizza;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,12 +30,12 @@ import java.util.List;
  * </p>
  */
 public class Pizzeria extends Thread {
+    private static final Logger logger = LogManager.getLogger(Pizzeria.class);
     private static final String PIZZERIA_STATE = "pizzeriaState.json";
-    private static final String PIZZERIA_CONFIGURATION = "pizzeria.json";
     private final int workingTime;
     private BlockingQueue<Integer> orders;
     private BlockingQueue<Integer> storage;
-    private PizzeriaConfiguration pizzeriaConfiguration;
+    private final PizzeriaConfiguration pizzeriaConfiguration;
     private final List<Thread> bakerThreads;
     private final List<Thread> deliveryThreads;
 
@@ -45,7 +48,7 @@ public class Pizzeria extends Thread {
      * @throws IllegalAccessException If the loaded configuration is invalid.
      */
     public Pizzeria(int workingTime) throws IOException, IllegalAccessException {
-        setPizzeriaConfiguration();
+        pizzeriaConfiguration = new PizzeriaConfiguration();
         loadOrders();
 
         this.workingTime = workingTime;
@@ -83,7 +86,7 @@ public class Pizzeria extends Thread {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Работа окончена");
+        logger.info("Работа окончена");
 
         try {
             saveOrders();
@@ -179,45 +182,5 @@ public class Pizzeria extends Thread {
         try (FileOutputStream outputStream = new FileOutputStream(PIZZERIA_STATE)) {
             objectMapper.writeValue(outputStream, pizzeriaState);
         }
-    }
-
-    /**
-     * Reads and sets the pizzeria configuration from a configuration file.
-     *
-     * @throws IOException            If an I/O error occurs during the configuration
-     *                                loading process.
-     * @throws IllegalAccessException If the loaded configuration is invalid or incomplete.
-     */
-    private void setPizzeriaConfiguration() throws IOException, IllegalAccessException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        PizzeriaConfiguration pizzeriaConfiguration;
-        try (InputStream fileInputStream =
-                     ClassLoader.getSystemResourceAsStream(PIZZERIA_CONFIGURATION)) {
-            pizzeriaConfiguration =
-                    objectMapper.readValue(fileInputStream, PizzeriaConfiguration.class);
-        }
-
-        List<Integer> bakersCookingTime = pizzeriaConfiguration.getBakersCookingTime();
-        List<Integer> deliveriesCapacity = pizzeriaConfiguration.getDeliveriesCapacity();
-        int storageCapacity = pizzeriaConfiguration.getStorageCapacity();
-
-        if (deliveriesCapacity.isEmpty()
-                || bakersCookingTime.isEmpty()
-                || storageCapacity <= 0) {
-            throw new IllegalAccessException();
-        }
-        for (var i : bakersCookingTime) {
-            if (i <= 0) {
-                throw new IllegalAccessException();
-            }
-        }
-        for (var i : deliveriesCapacity) {
-            if (i <= 0) {
-                throw new IllegalAccessException();
-            }
-        }
-
-        this.pizzeriaConfiguration = pizzeriaConfiguration;
     }
 }

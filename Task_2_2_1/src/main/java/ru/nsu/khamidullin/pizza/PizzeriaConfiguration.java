@@ -1,5 +1,9 @@
 package ru.nsu.khamidullin.pizza;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -9,9 +13,14 @@ import java.util.List;
  * and storage capacity.
  */
 public class PizzeriaConfiguration {
+    private static final String PIZZERIA_CONFIGURATION = "pizzeria.json";
     private List<Integer> bakersCookingTime;
     private List<Integer> deliveriesCapacity;
     private int storageCapacity;
+
+    public PizzeriaConfiguration() throws IOException, IllegalAccessException {
+        setPizzeriaConfiguration();
+    }
 
     /**
      * Gets the list of cooking times for the bakers.
@@ -64,6 +73,48 @@ public class PizzeriaConfiguration {
      * @param storageCapacity The storage capacity to set for the pizzeria.
      */
     public void setStorageCapacity(int storageCapacity) {
+        this.storageCapacity = storageCapacity;
+    }
+
+    /**
+     * Reads and sets the pizzeria configuration from a configuration file.
+     *
+     * @throws IOException            If an I/O error occurs during the configuration
+     *                                loading process.
+     * @throws IllegalAccessException If the loaded configuration is invalid or incomplete.
+     */
+    private void setPizzeriaConfiguration() throws IOException, IllegalAccessException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        PizzeriaConfiguration pizzeriaConfiguration;
+        try (InputStream fileInputStream =
+                     ClassLoader.getSystemResourceAsStream(PIZZERIA_CONFIGURATION)) {
+            pizzeriaConfiguration =
+                    objectMapper.readValue(fileInputStream, PizzeriaConfiguration.class);
+        }
+
+        List<Integer> bakersCookingTime = pizzeriaConfiguration.getBakersCookingTime();
+        List<Integer> deliveriesCapacity = pizzeriaConfiguration.getDeliveriesCapacity();
+        int storageCapacity = pizzeriaConfiguration.getStorageCapacity();
+
+        if (deliveriesCapacity.isEmpty()
+                || bakersCookingTime.isEmpty()
+                || storageCapacity <= 0) {
+            throw new IllegalAccessException();
+        }
+        for (var i : bakersCookingTime) {
+            if (i <= 0) {
+                throw new IllegalAccessException();
+            }
+        }
+        for (var i : deliveriesCapacity) {
+            if (i <= 0) {
+                throw new IllegalAccessException();
+            }
+        }
+
+        this.bakersCookingTime = bakersCookingTime;
+        this.deliveriesCapacity = deliveriesCapacity;
         this.storageCapacity = storageCapacity;
     }
 }
