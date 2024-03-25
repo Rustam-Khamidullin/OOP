@@ -23,7 +23,7 @@ public class Main {
         Pizzeria pizzeria;
 
         try {
-            pizzeria = new Pizzeria(20000);
+            pizzeria = new Pizzeria(20000, true);
         } catch (IllegalAccessException | IOException e) {
             logger.error("Invalid format in pizzeria.json");
             return;

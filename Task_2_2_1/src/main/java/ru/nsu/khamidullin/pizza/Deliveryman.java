@@ -42,7 +42,7 @@ public class Deliveryman extends Thread {
                     return;
                 }
 
-                logger.info("Заказ id доставляется\n");
+                logger.info(id + " заказ доставляется\n");
                 current++;
             } while (current < capacity && !storage.isEmpty() && !interrupted());
 

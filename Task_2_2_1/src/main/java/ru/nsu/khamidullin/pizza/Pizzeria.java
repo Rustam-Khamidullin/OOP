@@ -1,13 +1,15 @@
 package ru.nsu.khamidullin.pizza;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 /**
  * The {@code Pizzeria} class represents a simulated pizzeria with bakers and deliverymen,
@@ -28,11 +30,12 @@ import org.apache.log4j.Logger;
  */
 public class Pizzeria extends Thread {
     private static final Logger logger = LogManager.getLogger(Pizzeria.class);
+    private static final String PIZZERIA_CONFIGURATION = "pizzeria.json";
     private static final String PIZZERIA_STATE = "pizzeriaState.json";
     private final int workingTime;
     private BlockingQueue<Integer> orders;
     private BlockingQueue<Integer> storage;
-    private final PizzeriaConfiguration pizzeriaConfiguration;
+    private PizzeriaConfiguration pizzeriaConfiguration;
     private final List<Thread> bakerThreads;
     private final List<Thread> deliveryThreads;
 
@@ -44,9 +47,20 @@ public class Pizzeria extends Thread {
      * @throws IOException            If an I/O error occurs while loading configuration or orders.
      * @throws IllegalAccessException If the loaded configuration is invalid.
      */
-    public Pizzeria(int workingTime) throws IOException, IllegalAccessException {
-        pizzeriaConfiguration = new PizzeriaConfiguration();
-        loadOrders();
+
+    public Pizzeria(int workingTime, boolean loadOrders) throws IOException, IllegalAccessException {
+        this(workingTime, loadOrders, loadPizzeriaConfiguration());
+    }
+
+    public Pizzeria(int workingTime, boolean loadOrders, PizzeriaConfiguration pizzeriaConfiguration)
+            throws IOException, IllegalAccessException {
+        this.pizzeriaConfiguration = loadPizzeriaConfiguration();
+        orders = new BlockingQueue<>();
+        storage = new BlockingQueue<>(pizzeriaConfiguration.getStorageCapacity());
+
+        if (loadOrders) {
+            loadOrders();
+        }
 
         this.workingTime = workingTime;
 
@@ -148,9 +162,6 @@ public class Pizzeria extends Thread {
 
         PizzeriaState pizzeriaState;
 
-        orders = new BlockingQueue<>();
-        storage = new BlockingQueue<>(pizzeriaConfiguration.getStorageCapacity());
-
         try (FileInputStream fileInputStream = new FileInputStream(PIZZERIA_STATE)) {
             pizzeriaState =
                     objectMapper.readValue(fileInputStream, PizzeriaState.class);
@@ -179,5 +190,61 @@ public class Pizzeria extends Thread {
         try (FileOutputStream outputStream = new FileOutputStream(PIZZERIA_STATE)) {
             objectMapper.writeValue(outputStream, pizzeriaState);
         }
+    }
+
+    /**
+     * Reads and sets the pizzeria configuration from a configuration file.
+     *
+     * @throws IOException            If an I/O error occurs during the configuration
+     *                                loading process.
+     * @throws IllegalAccessException If the loaded configuration is invalid or incomplete.
+     */
+    private static PizzeriaConfiguration loadPizzeriaConfiguration() throws IOException, IllegalAccessException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        PizzeriaConfiguration pizzeriaConfiguration;
+        try (InputStream fileInputStream =
+                     ClassLoader.getSystemResourceAsStream(PIZZERIA_CONFIGURATION)) {
+            pizzeriaConfiguration =
+                    objectMapper.readValue(fileInputStream, PizzeriaConfiguration.class);
+        }
+
+        List<Integer> bakersCookingTime = pizzeriaConfiguration.getBakersCookingTime();
+        List<Integer> deliveriesCapacity = pizzeriaConfiguration.getDeliveriesCapacity();
+        int storageCapacity = pizzeriaConfiguration.getStorageCapacity();
+
+        if (deliveriesCapacity.isEmpty()
+                || bakersCookingTime.isEmpty()
+                || storageCapacity <= 0) {
+            throw new IllegalAccessException();
+        }
+        for (var i : bakersCookingTime) {
+            if (i <= 0) {
+                throw new IllegalAccessException();
+            }
+        }
+        for (var i : deliveriesCapacity) {
+            if (i <= 0) {
+                throw new IllegalAccessException();
+            }
+        }
+
+        return pizzeriaConfiguration;
+    }
+
+    public PizzeriaConfiguration getPizzeriaConfiguration() {
+        return pizzeriaConfiguration;
+    }
+
+    public void setPizzeriaConfiguration(PizzeriaConfiguration pizzeriaConfiguration) {
+        this.pizzeriaConfiguration = pizzeriaConfiguration;
+    }
+
+    public BlockingQueue<Integer> getOrders() {
+        return orders;
+    }
+
+    public BlockingQueue<Integer> getStorage() {
+        return storage;
     }
 }
