@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * The {@code Pizzeria} class represents a simulated pizzeria with bakers and deliverymen,
  * handling pizza orders and deliveries.
@@ -47,12 +48,21 @@ public class Pizzeria extends Thread {
      * @throws IOException            If an I/O error occurs while loading configuration or orders.
      * @throws IllegalAccessException If the loaded configuration is invalid.
      */
-
-    public Pizzeria(int workingTime, boolean loadOrders) throws IOException, IllegalAccessException {
+    public Pizzeria(int workingTime, boolean loadOrders)
+            throws IOException, IllegalAccessException {
         this(workingTime, loadOrders, loadPizzeriaConfiguration());
     }
 
-    public Pizzeria(int workingTime, boolean loadOrders, PizzeriaConfiguration pizzeriaConfiguration)
+    /**
+     * Constructs a new {@code Pizzeria} instance with the specified working time.
+     *
+     * @param workingTime The duration the pizzeria will be operational (in milliseconds).
+     * @throws IOException            If an I/O error occurs while loading configuration or orders.
+     * @throws IllegalAccessException If the loaded configuration is invalid.
+     */
+    public Pizzeria(int workingTime,
+                    boolean loadOrders,
+                    PizzeriaConfiguration pizzeriaConfiguration)
             throws IOException, IllegalAccessException {
         this.pizzeriaConfiguration = loadPizzeriaConfiguration();
         orders = new BlockingQueue<>();
@@ -199,7 +209,8 @@ public class Pizzeria extends Thread {
      *                                loading process.
      * @throws IllegalAccessException If the loaded configuration is invalid or incomplete.
      */
-    private static PizzeriaConfiguration loadPizzeriaConfiguration() throws IOException, IllegalAccessException {
+    private static PizzeriaConfiguration loadPizzeriaConfiguration()
+            throws IOException, IllegalAccessException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         PizzeriaConfiguration pizzeriaConfiguration;
