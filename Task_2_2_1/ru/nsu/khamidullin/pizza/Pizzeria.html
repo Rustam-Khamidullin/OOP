@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -210,10 +210,17 @@ extends java.lang.Thread</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">Pizzeria</a></span>&#8203;(int&nbsp;workingTime)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean)">Pizzeria</a></span>&#8203;(int&nbsp;workingTime,
+        boolean&nbsp;loadOrders)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new <code>Pizzeria</code> instance with the specified working time.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,ru.nsu.khamidullin.pizza.PizzeriaConfiguration)">Pizzeria</a></span>&#8203;(int&nbsp;workingTime,
+        boolean&nbsp;loadOrders,
+        <a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -241,11 +248,31 @@ extends java.lang.Thread</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="BlockingQueue.html" title="class in ru.nsu.khamidullin.pizza">BlockingQueue</a>&lt;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrders()">getOrders</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPizzeriaConfiguration()">getPizzeriaConfiguration</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="BlockingQueue.html" title="class in ru.nsu.khamidullin.pizza">BlockingQueue</a>&lt;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStorage()">getStorage</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run()">run</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Runs the pizzeria simulation.</div>
 </td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPizzeriaConfiguration(ru.nsu.khamidullin.pizza.PizzeriaConfiguration)">setPizzeriaConfiguration</a></span>&#8203;(<a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -278,13 +305,14 @@ extends java.lang.Thread</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(int)">
+<a id="&lt;init&gt;(int,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Pizzeria</h4>
-<pre>public&nbsp;Pizzeria&#8203;(int&nbsp;workingTime)
+<pre>public&nbsp;Pizzeria&#8203;(int&nbsp;workingTime,
+                boolean&nbsp;loadOrders)
          throws java.io.IOException,
                 java.lang.IllegalAccessException</pre>
 <div class="block">Constructs a new <code>Pizzeria</code> instance with the specified working time.</div>
@@ -294,6 +322,24 @@ extends java.lang.Thread</pre>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code> - If an I/O error occurs while loading configuration or orders.</dd>
 <dd><code>java.lang.IllegalAccessException</code> - If the loaded configuration is invalid.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(int,boolean,ru.nsu.khamidullin.pizza.PizzeriaConfiguration)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Pizzeria</h4>
+<pre>public&nbsp;Pizzeria&#8203;(int&nbsp;workingTime,
+                boolean&nbsp;loadOrders,
+                <a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)
+         throws java.io.IOException,
+                java.lang.IllegalAccessException</pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+<dd><code>java.lang.IllegalAccessException</code></dd>
 </dl>
 </li>
 </ul>
@@ -328,7 +374,7 @@ extends java.lang.Thread</pre>
 <a id="addOrder(int)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>addOrder</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addOrder&#8203;(int&nbsp;id)
@@ -341,6 +387,42 @@ extends java.lang.Thread</pre>
 <dd><code>java.lang.InterruptedException</code> - If the thread is interrupted
                               while adding the order to the queue.</dd>
 </dl>
+</li>
+</ul>
+<a id="getPizzeriaConfiguration()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPizzeriaConfiguration</h4>
+<pre class="methodSignature">public&nbsp;<a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;getPizzeriaConfiguration()</pre>
+</li>
+</ul>
+<a id="setPizzeriaConfiguration(ru.nsu.khamidullin.pizza.PizzeriaConfiguration)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPizzeriaConfiguration</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPizzeriaConfiguration&#8203;(<a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)</pre>
+</li>
+</ul>
+<a id="getOrders()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOrders</h4>
+<pre class="methodSignature">public&nbsp;<a href="BlockingQueue.html" title="class in ru.nsu.khamidullin.pizza">BlockingQueue</a>&lt;java.lang.Integer&gt;&nbsp;getOrders()</pre>
+</li>
+</ul>
+<a id="getStorage()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getStorage</h4>
+<pre class="methodSignature">public&nbsp;<a href="BlockingQueue.html" title="class in ru.nsu.khamidullin.pizza">BlockingQueue</a>&lt;java.lang.Integer&gt;&nbsp;getStorage()</pre>
 </li>
 </ul>
 </li>
