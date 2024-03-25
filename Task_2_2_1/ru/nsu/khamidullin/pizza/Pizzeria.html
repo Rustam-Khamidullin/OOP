@@ -220,7 +220,9 @@ extends java.lang.Thread</pre>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,ru.nsu.khamidullin.pizza.PizzeriaConfiguration)">Pizzeria</a></span>&#8203;(int&nbsp;workingTime,
         boolean&nbsp;loadOrders,
         <a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a new <code>Pizzeria</code> instance with the specified working time.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -336,10 +338,13 @@ extends java.lang.Thread</pre>
                 <a href="PizzeriaConfiguration.html" title="class in ru.nsu.khamidullin.pizza">PizzeriaConfiguration</a>&nbsp;pizzeriaConfiguration)
          throws java.io.IOException,
                 java.lang.IllegalAccessException</pre>
+<div class="block">Constructs a new <code>Pizzeria</code> instance with the specified working time.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>workingTime</code> - The duration the pizzeria will be operational (in milliseconds).</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dd><code>java.lang.IllegalAccessException</code></dd>
+<dd><code>java.io.IOException</code> - If an I/O error occurs while loading configuration or orders.</dd>
+<dd><code>java.lang.IllegalAccessException</code> - If the loaded configuration is invalid.</dd>
 </dl>
 </li>
 </ul>
