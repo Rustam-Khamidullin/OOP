@@ -11,11 +11,8 @@ public class SnakeGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        GridPane root = new GridPane();
-        Scene scene = new Scene(root, WIDTH * Cell.SIZE, HEIGHT * Cell.SIZE);
-
         Controller controller = new Controller(WIDTH, HEIGHT);
-        root.getChildren().addAll(controller.getView());
+        Scene scene = new Scene(controller.getView(), WIDTH * Cell.SIZE, HEIGHT * Cell.SIZE);
 
         scene.setOnKeyPressed(controller::handleKeyPress);
 

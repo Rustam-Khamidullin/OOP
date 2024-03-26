@@ -32,6 +32,15 @@ public class Controller {
     public void initGame() {
         field.getChildren().clear();
         snake.clear();
+//
+//        for (int y = 0; y < height; y++) {
+//            for (int x = 0; x < width; x++) {
+//                Rectangle cell = new Rectangle(10, 10);
+//                cell.setFill(Color.WHITE);
+//                cell.setStroke(Color.BLACK);
+//                field.add(cell, x, y);
+//            }
+//        }
 
         Cell head = new Cell();
         snake.add(head);
@@ -50,7 +59,20 @@ public class Controller {
     }
 
     void checkCollisions() {
+        Cell head = snake.getFirst();
+        int headX = GridPane.getColumnIndex(head);
+        int headY = GridPane.getRowIndex(head);
 
+        for (var elem : snake) {
+            if (elem != head) {
+                int elemX = GridPane.getColumnIndex(elem);
+                int elemY = GridPane.getRowIndex(elem);
+
+                if (headY == elemY && headX == elemX) {
+                    initGame();
+                }
+            }
+        }
     }
 
     public void handleKeyPress(KeyEvent event) {
