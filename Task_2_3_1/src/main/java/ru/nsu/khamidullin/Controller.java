@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.LinkedList;
@@ -16,7 +18,7 @@ public class Controller {
     private final int width;
     private final int height;
     private final GridPane field;
-    private final LinkedList<Cell> snake;
+    private final LinkedList<SnakeElem> snake;
     private final Food food;
     private Direction direction = Direction.RIGHT;
 
@@ -26,23 +28,24 @@ public class Controller {
         this.field = new GridPane(width, height);
         this.snake = new LinkedList<>();
         this.food = new Food();
+        field.setHgap(0);
+        field.setVgap(0);
         initGame();
     }
 
     public void initGame() {
         field.getChildren().clear();
         snake.clear();
-//
-//        for (int y = 0; y < height; y++) {
-//            for (int x = 0; x < width; x++) {
-//                Rectangle cell = new Rectangle(10, 10);
-//                cell.setFill(Color.WHITE);
-//                cell.setStroke(Color.BLACK);
-//                field.add(cell, x, y);
-//            }
-//        }
 
-        Cell head = new Cell();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Rectangle cell = new Rectangle(SnakeElem.SIZE, SnakeElem.SIZE);
+                cell.setFill(Color.BLACK);
+                field.add(cell, x, y);
+            }
+        }
+
+        SnakeElem head = new SnakeElem();
         snake.add(head);
 
         field.add(head, width / 2, height / 2);
@@ -50,7 +53,7 @@ public class Controller {
     }
 
     public void startGame() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), event -> {
             moveSnake();
             checkCollisions();
         }));
@@ -59,7 +62,7 @@ public class Controller {
     }
 
     void checkCollisions() {
-        Cell head = snake.getFirst();
+        SnakeElem head = snake.getFirst();
         int headX = GridPane.getColumnIndex(head);
         int headY = GridPane.getRowIndex(head);
 
@@ -104,18 +107,11 @@ public class Controller {
     }
 
     private void moveSnake() {
-        Cell head = snake.getFirst();
+        SnakeElem head = snake.getFirst();
         int newHeadX = (GridPane.getColumnIndex(head) + direction.getX() + height) % height;
         int newHeadY = (GridPane.getRowIndex(head) + direction.getY() + width) % width;
 
-//        if (newHeadX < 0 || newHeadX >= width || newHeadY < 0 || newHeadY >= height || isCellOccupied(newHeadX, newHeadY)) {
-//            // Game over condition: Snake hits wall or itself
-//            gameOver();
-//            return;
-//        }
-
-
-        Cell newHead = new Cell();
+        SnakeElem newHead = new SnakeElem();
         snake.addFirst(newHead);
         field.add(newHead, newHeadX, newHeadY);
 

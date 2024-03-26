@@ -2,7 +2,6 @@ package ru.nsu.khamidullin;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class SnakeGame extends Application {
@@ -12,7 +11,7 @@ public class SnakeGame extends Application {
     @Override
     public void start(Stage primaryStage) {
         Controller controller = new Controller(WIDTH, HEIGHT);
-        Scene scene = new Scene(controller.getView(), WIDTH * Cell.SIZE, HEIGHT * Cell.SIZE);
+        Scene scene = new Scene(controller.getView(), WIDTH * SnakeElem.SIZE, HEIGHT * SnakeElem.SIZE);
 
         scene.setOnKeyPressed(controller::handleKeyPress);
 
