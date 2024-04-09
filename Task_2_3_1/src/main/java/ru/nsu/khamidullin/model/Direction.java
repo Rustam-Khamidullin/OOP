@@ -1,4 +1,4 @@
-package ru.nsu.khamidullin;
+package ru.nsu.khamidullin.model;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package ru.nsu.khamidullin;
+package ru.nsu.khamidullin.controller;
 
 
 import javafx.animation.KeyFrame;
@@ -10,6 +10,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
+import ru.nsu.khamidullin.model.Coordinate;
+import ru.nsu.khamidullin.model.Direction;
+import ru.nsu.khamidullin.model.node.Food;
+import ru.nsu.khamidullin.model.node.SnakeElem;
 
 import java.util.HashSet;
 import java.util.LinkedList;

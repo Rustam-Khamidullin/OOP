@@ -1,7 +1,8 @@
-package ru.nsu.khamidullin;
+package ru.nsu.khamidullin.controller;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import ru.nsu.khamidullin.model.Direction;
 
 public class KeyHandler {
     private final Controller controller;
@@ -18,7 +19,6 @@ public class KeyHandler {
             directionHandle(code);
         }
     }
-
 
     private void directionHandle(KeyCode code) {
         Direction prevDirection = controller.getPrevDirection();

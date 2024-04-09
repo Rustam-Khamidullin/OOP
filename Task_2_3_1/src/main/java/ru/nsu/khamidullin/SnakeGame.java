@@ -3,6 +3,8 @@ package ru.nsu.khamidullin;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.nsu.khamidullin.controller.Controller;
+import ru.nsu.khamidullin.controller.KeyHandler;
 
 public class SnakeGame extends Application {
     private static final int WIDTH = 20;
