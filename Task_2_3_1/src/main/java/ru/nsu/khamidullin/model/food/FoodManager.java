@@ -1,10 +1,9 @@
 package ru.nsu.khamidullin.model.food;
 
-import ru.nsu.khamidullin.model.Coordinate;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import ru.nsu.khamidullin.model.Coordinate;
 
 /**
  * Class responsible for managing food in the game.

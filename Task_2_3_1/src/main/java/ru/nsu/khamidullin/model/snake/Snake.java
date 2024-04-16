@@ -1,10 +1,9 @@
 package ru.nsu.khamidullin.model.snake;
 
-import lombok.Getter;
-import ru.nsu.khamidullin.model.Coordinate;
-
 import java.util.Deque;
 import java.util.LinkedList;
+import lombok.Getter;
+import ru.nsu.khamidullin.model.Coordinate;
 
 /**
  * Class representing the snake entity in the game.
