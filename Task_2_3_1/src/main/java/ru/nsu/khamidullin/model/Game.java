@@ -11,6 +11,10 @@ import ru.nsu.khamidullin.view.ViewRenderer;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * Represents the game logic and state.
+ */
 @Getter
 public class Game extends Thread {
     private final CellType[][] field;
@@ -23,6 +27,15 @@ public class Game extends Thread {
     private FoodManager foodManager;
     private boolean defeat;
 
+    /**
+     * Constructs a Game object with the specified parameters.
+     *
+     * @param foodNumber   the number of food items in the game.
+     * @param width        the width of the game field.
+     * @param height       the height of the game field.
+     * @param winSize      the size required to win the game.
+     * @param viewRenderer the view renderer for displaying the game.
+     */
     public Game(int foodNumber, int width, int height, int winSize, ViewRenderer viewRenderer) {
         this.winSize = winSize;
         this.foodNumber = foodNumber;
@@ -35,6 +48,9 @@ public class Game extends Thread {
         initGame();
     }
 
+    /**
+     * Initialization.
+     */
     private void initGame() {
         cleanField(field);
         setWall();
@@ -59,6 +75,9 @@ public class Game extends Thread {
         }
     }
 
+    /**
+     * Main loop.
+     */
     private void loop() {
         moveSnake(playerSnake);
         checkDefeat();
@@ -69,11 +88,21 @@ public class Game extends Thread {
         viewRenderer.render(field);
     }
 
+    /**
+     * Directs the player-controlled snake in the specified direction.
+     *
+     * @param direction the direction to move the snake.
+     */
     public void directPlayerSnake(Direction direction) {
         playerSnake.setDirection(direction);
     }
 
-    public void moveSnake(Snake snake) {
+    /**
+     * Moving.
+     *
+     * @param snake move snake.
+     */
+    private void moveSnake(Snake snake) {
         for (var coordinate : snake.getSnake()) {
             place(coordinate, CellType.EMPTY);
         }
@@ -90,7 +119,10 @@ public class Game extends Thread {
         }
     }
 
-    public void spawnFood() {
+    /**
+     * Add new food.
+     */
+    private void spawnFood() {
         var generatedFood = foodManager.generateFood(getEmptyCoordinates());
 
         for (var newFood : generatedFood) {
@@ -98,7 +130,10 @@ public class Game extends Thread {
         }
     }
 
-    public void checkDefeat() {
+    /**
+     * Check if player defeat.
+     */
+    private void checkDefeat() {
         defeat |= playerSnake.checkSelfCollision();
 
         if (defeat) {
@@ -106,12 +141,20 @@ public class Game extends Thread {
         }
     }
 
-    public void checkWin() {
+    /**
+     * Check if player win.
+     */
+    private void checkWin() {
         if (playerSnake.size() == winSize) {
             initGame();
         }
     }
 
+    /**
+     * Empty coordinates.
+     *
+     * @return empty coordinates.
+     */
     private List<Coordinate> getEmptyCoordinates() {
         List<Coordinate> emptyCoordinates = new LinkedList<>();
         for (int i = 0; i < width; i++) {
@@ -124,16 +167,34 @@ public class Game extends Thread {
         return emptyCoordinates;
     }
 
+    /**
+     * Places the specified cell type at the given coordinate in the game field.
+     *
+     * @param coordinate the coordinate where the cell type will be placed.
+     * @param cellType   the type of cell to be placed.
+     * @return the previous cell type at the specified coordinate.
+     */
     private CellType place(Coordinate coordinate, CellType cellType) {
         var result = field[coordinate.getX()][coordinate.getY()];
         field[coordinate.getX()][coordinate.getY()] = cellType;
         return result;
     }
 
+    /**
+     * Retrieves the cell type at the specified coordinate in the game field.
+     *
+     * @param coordinate the coordinate of the cell to retrieve.
+     * @return the cell type at the specified coordinate.
+     */
     private CellType getCell(Coordinate coordinate) {
         return field[coordinate.getX()][coordinate.getY()];
     }
 
+    /**
+     * Cleans the game field by setting all cells to EMPTY.
+     *
+     * @param field the field to be cleaned.
+     */
     private void cleanField(CellType[][] field) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -142,6 +203,9 @@ public class Game extends Thread {
         }
     }
 
+    /**
+     * Sets the outer walls of the game field to WALL.
+     */
     private void setWall() {
         for (int i = 0; i < width; i++) {
             field[i][0] = CellType.WALL;

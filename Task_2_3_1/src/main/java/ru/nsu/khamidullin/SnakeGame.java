@@ -8,6 +8,9 @@ import ru.nsu.khamidullin.controller.Controller;
 import ru.nsu.khamidullin.model.Game;
 import ru.nsu.khamidullin.view.ViewRenderer;
 
+/**
+ * The main class for running the Snake Game application.
+ */
 public class SnakeGame extends Application {
     private static final int WIN_WIDTH = 800;
     private static final int WIN_HEIGHT = 600;
@@ -16,6 +19,20 @@ public class SnakeGame extends Application {
     private static final int FOOD_NUMBER = 3;
     private static final int MAX_SNAKE_SIZE = 20;
 
+    /**
+     * Launches the application.
+     *
+     * @param args the command-line arguments.
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    /**
+     * Initializes and starts the Snake Game application.
+     *
+     * @param primaryStage the primary stage for the application.
+     */
     @Override
     public void start(Stage primaryStage) {
         ViewRenderer viewRenderer = new ViewRenderer(WIN_WIDTH, WIN_HEIGHT, WIDTH, HEIGHT);
@@ -26,13 +43,9 @@ public class SnakeGame extends Application {
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
         scene.setOnKeyPressed(controller::handleKeyPress);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Updating Scene");
+        primaryStage.setTitle("Snake Game");
         primaryStage.show();
 
         game.start();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

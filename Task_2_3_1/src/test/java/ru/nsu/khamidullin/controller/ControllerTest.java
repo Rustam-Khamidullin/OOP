@@ -22,35 +22,40 @@ class ControllerTest {
 
     @Test
     void testHandleKeyPressUp() {
-        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.UP, false, false, false, false);
+        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED,
+                "", "", KeyCode.UP, false, false, false, false);
         controller.handleKeyPress(event);
         Assertions.assertEquals(game.getPlayerSnake().getDirection(), Direction.UP);
     }
 
     @Test
     void testHandleKeyPressDown() {
-        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.DOWN, false, false, false, false);
+        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED,
+                "", "", KeyCode.DOWN, false, false, false, false);
         controller.handleKeyPress(event);
         Assertions.assertEquals(Direction.DOWN, game.getPlayerSnake().getDirection());
     }
 
     @Test
     void testHandleKeyPressLeft() {
-        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.LEFT, false, false, false, false);
+        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED,
+                "", "", KeyCode.LEFT, false, false, false, false);
         controller.handleKeyPress(event);
         Assertions.assertEquals(Direction.RIGHT, game.getPlayerSnake().getDirection());
     }
 
     @Test
     void testHandleKeyPressRight() {
-        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.RIGHT, false, false, false, false);
+        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED,
+                "", "", KeyCode.RIGHT, false, false, false, false);
         controller.handleKeyPress(event);
         Assertions.assertEquals(Direction.RIGHT, game.getPlayerSnake().getDirection());
     }
 
     @Test
     void testHandleKeyPressNonArrowKey() {
-        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.SPACE, false, false, false, false);
+        KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED,
+                "", "", KeyCode.SPACE, false, false, false, false);
         controller.handleKeyPress(event);
         Assertions.assertNotEquals(Direction.UP, game.getPlayerSnake().getDirection());
         Assertions.assertNotEquals(Direction.DOWN, game.getPlayerSnake().getDirection());

@@ -9,12 +9,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import ru.nsu.khamidullin.model.CellType;
 
+/**
+ * Class responsible for rendering the game view.
+ */
 public class ViewRenderer {
     private final GridPane gridPane;
     private final int width;
     private final int height;
     private final int cellSize;
 
+    /**
+     * Constructs a ViewRenderer with the specified window dimensions and field dimensions.
+     *
+     * @param winWidth  the width of the game window.
+     * @param winHeight the height of the game window.
+     * @param width     the width of the game field.
+     * @param height    the height of the game field.
+     */
     public ViewRenderer(int winWidth, int winHeight, int width, int height) {
         gridPane = new GridPane(width, height);
         gridPane.setBackground(Background.fill(Color.BLACK));
@@ -29,6 +40,11 @@ public class ViewRenderer {
         cellSize = Math.min(winHeight / height, winWidth / width);
     }
 
+    /**
+     * Renders the game field based on the provided cell types.
+     *
+     * @param field the 2D array representing the game field with cell types.
+     */
     public void render(CellType[][] field) {
         gridPane.getChildren().clear();
 
@@ -50,6 +66,11 @@ public class ViewRenderer {
         }
     }
 
+    /**
+     * Retrieves the rendered view as a GridPane.
+     *
+     * @return the rendered view as a GridPane.
+     */
     public GridPane getView() {
         return gridPane;
     }
