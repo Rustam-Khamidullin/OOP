@@ -1,4 +1,4 @@
-package ru.nsu.khamidullin.model;
+package ru.nsu.khamidullin.model.snake;
 
 import lombok.Getter;
 

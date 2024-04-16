@@ -1,4 +1,9 @@
 package ru.nsu.khamidullin.model;
 
-public record Coordinate(int x, int y) {
+import lombok.Data;
+
+@Data
+public class Coordinate {
+    private final int x;
+    private final int y;
 }
