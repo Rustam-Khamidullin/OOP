@@ -1,14 +1,11 @@
 package ru.nsu.khamidullin.model.food;
 
-import org.junit.jupiter.api.Test;
-import ru.nsu.khamidullin.model.Coordinate;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import ru.nsu.khamidullin.model.Coordinate;
 
 /**
  * Test class.
@@ -26,10 +23,10 @@ class FoodManagerTest {
         ));
 
         List<Coordinate> generatedFood = foodManager.generateFood(emptyCoordinates);
-        assertEquals(3, generatedFood.size());
+        Assertions.assertEquals(3, generatedFood.size());
 
         for (Coordinate foodCoordinate : generatedFood) {
-            assertFalse(emptyCoordinates.contains(foodCoordinate));
+            Assertions.assertFalse(emptyCoordinates.contains(foodCoordinate));
         }
     }
 }

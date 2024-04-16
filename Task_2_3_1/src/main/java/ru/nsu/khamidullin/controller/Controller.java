@@ -4,6 +4,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ru.nsu.khamidullin.model.Game;
 import ru.nsu.khamidullin.model.snake.Direction;
+
 /**
  * Class responsible for controlling the game process.
  */

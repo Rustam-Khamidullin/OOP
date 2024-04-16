@@ -2,6 +2,9 @@ package ru.nsu.khamidullin.model.snake;
 
 import lombok.Getter;
 
+/**
+ * Direction.
+ */
 @Getter
 public enum Direction {
     UP(0, -1),

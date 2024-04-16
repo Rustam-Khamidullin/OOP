@@ -3,6 +3,7 @@ package ru.nsu.khamidullin.model.snake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.nsu.khamidullin.model.Coordinate;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
