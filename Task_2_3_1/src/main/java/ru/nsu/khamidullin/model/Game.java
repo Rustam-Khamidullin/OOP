@@ -122,7 +122,7 @@ public class Game extends Thread {
     /**
      * Add new food.
      */
-    private void spawnFood() {
+    public void spawnFood() {
         var generatedFood = foodManager.generateFood(getEmptyCoordinates());
 
         for (var newFood : generatedFood) {
@@ -144,7 +144,7 @@ public class Game extends Thread {
     /**
      * Check if player win.
      */
-    private void checkWin() {
+    public void checkWin() {
         if (playerSnake.size() == winSize) {
             initGame();
         }
