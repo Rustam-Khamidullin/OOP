@@ -6,13 +6,13 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class RequestHandler extends Thread {
+public class RequestManager extends Thread {
     private final ServerSocket serverSocket;
     private final int[] array;
     private Boolean result = null;
 
 
-    public RequestHandler(int[] array, ServerSocket serverSocket) {
+    public RequestManager(int[] array, ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
         this.array = array;
 

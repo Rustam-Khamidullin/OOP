@@ -1,41 +1,49 @@
 package ru.nsu.khamidullin.prime.distibutor;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.nio.ByteBuffer;
+import java.net.ServerSocket;
+import java.util.Arrays;
 
-public class Distributor {
+public class Distributor extends Thread {
     private static final int PORT = 8080;
-    private static final String NODES_HOST = "230.0.0.1";
-    private static final int NODES_PORT = 8888;
+    private static final int PARTS = 5;
+    private final int[] array;
+    private boolean result = false;
 
-    public static void main(String[] args) throws InterruptedException {
-        int[] arr = {1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-
-        Connector connector = new Connector(arr);
-
-        connector.start();
-
-        Thread.sleep(1000);
-
-        notifyNode();
+    public Distributor(int[] array) {
+        this.array = array;
     }
 
+    @Override
+    public void run() {
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 
-    private static void notifyNode() {
-        try {
-            MulticastSocket multicastSocket = new MulticastSocket();
-            InetAddress group = InetAddress.getByName(NODES_HOST);
+            int blockSize = array.length / PARTS;
+            int start = 0;
+            int end = blockSize;
 
-            byte[] sendData = ByteBuffer.allocate(Integer.BYTES).putInt(PORT).array();
+            var requestHandlers = new RequestManager[PARTS];
 
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, group, NODES_PORT);
-            multicastSocket.send(sendPacket);
-            multicastSocket.close();
-        } catch (IOException e) {
+            for (int i = 0; i < PARTS; i++) {
+                var newTask = new RequestManager(Arrays.copyOfRange(array, start, end), serverSocket);
+                newTask.start();
+                requestHandlers[i] = newTask;
+
+                start = end;
+                end = i == PARTS - 2 ? array.length : end + blockSize;
+            }
+
+            for (var request : requestHandlers) {
+                request.join();
+                result |= request.getResult();
+            }
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean getResult() {
+        return result;
+    }
+
 }
