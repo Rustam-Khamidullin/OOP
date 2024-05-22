@@ -7,7 +7,6 @@ import ru.nsu.khamidullin.hwChecker.model.StudentStatistic
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.exists
 
 
 private fun runCommand(command: List<String>, workingDir: File): Int {
@@ -36,7 +35,7 @@ fun cloneRepositories(statistics: List<StudentStatistic>) = runBlocking {
                 throw Exception("Clear target directory")
             }
 
-            statistic.isClonedRepo = status == 0
+            statistic.isRepoCloned = status == 0
         }
     }
 }

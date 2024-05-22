@@ -5,13 +5,15 @@ import ru.nsu.khamidullin.hwChecker.model.StudentStatistic
 
 class SimpleHtmlGenerator : HtmlGenerator {
     override fun generateHtml(statistics: List<StudentStatistic>): String {
-        val htmlStringBuilder = StringBuilder("<html>" +
-                "<head>    <style>\n" +
-                "        table, th, td {            border: 1px solid black;\n" +
-                "            text-align: center;        }\n" +
-                "        th, td {            padding: 8px;\n" +
-                "        }    </style>\n" +
-                "    <title></title></head><body>")
+        val htmlStringBuilder = StringBuilder(
+            "<html>" +
+                    "<head>    <style>\n" +
+                    "        table, th, td {            border: 1px solid black;\n" +
+                    "            text-align: center;        }\n" +
+                    "        th, td {            padding: 8px;\n" +
+                    "        }    </style>\n" +
+                    "    <title></title></head><body>"
+        )
 
         for (task in Tasks.list) {
             htmlStringBuilder.append("<table>")
@@ -20,9 +22,9 @@ class SimpleHtmlGenerator : HtmlGenerator {
             for (statistic in statistics) {
                 val student = statistic.student
                 val studentUserName = student.name
-                val buildMark = statistic.build[task]
-                val javaDocMark = statistic.javadoc[task]
-                val testMark = statistic.test[task]
+                val buildMark = statistic.gradleStatistics[task]?.build
+                val javaDocMark = statistic.gradleStatistics[task]?.javadoc
+                val testMark = statistic.gradleStatistics[task]?.test
                 htmlStringBuilder.append("<tr><td>$studentUserName</td>")
                 htmlStringBuilder.append("<td>$buildMark</td>")
                 htmlStringBuilder.append("<td>$javaDocMark</td>")
@@ -32,7 +34,6 @@ class SimpleHtmlGenerator : HtmlGenerator {
         }
         htmlStringBuilder.append("</body></html>")
 
-        println(htmlStringBuilder.toString())
         return htmlStringBuilder.toString()
     }
 
@@ -47,7 +48,8 @@ class SimpleHtmlGenerator : HtmlGenerator {
     <th>Build</th>
     <th>JavaDoc</th>
     <th>Tests</th>
-</tr>""")
+</tr>"""
+        )
         return htmlStringBuilder
     }
 }

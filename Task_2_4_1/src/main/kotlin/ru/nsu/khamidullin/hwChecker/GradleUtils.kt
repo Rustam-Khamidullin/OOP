@@ -5,8 +5,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.gradle.tooling.GradleConnector
 import org.gradle.tooling.ProjectConnection
+import ru.nsu.khamidullin.hwChecker.model.GradleStatistic
 import ru.nsu.khamidullin.hwChecker.model.StudentStatistic
-import java.io.FileNotFoundException
 import java.nio.file.Path
 import kotlin.io.path.exists
 
@@ -17,48 +17,46 @@ fun runTask(task: String, connection: ProjectConnection) {
     }
 }
 
-fun gradleProcessProject(projectDir: Path): Triple<Boolean, Boolean, Boolean> {
+fun gradleProcessProject(projectDir: Path): GradleStatistic {
     var build = false
     var javadoc = false
     var test = false
 
-    if (!projectDir.exists()) {
-        throw FileNotFoundException("Can't find $projectDir")
-    }
+    if (projectDir.exists()) {
+        val connector = GradleConnector.newConnector().apply {
+            forProjectDirectory(projectDir.toFile())
+        }
 
-    val connector = GradleConnector.newConnector().apply {
-        forProjectDirectory(projectDir.toFile())
-    }
+        connector.connect().use { connection ->
+            try {
+                runTask("build", connection)
+                build = true
 
-    connector.connect().use { connection ->
-        try {
-            runTask("build", connection)
-            build = true
+                runTask("javadoc", connection)
+                javadoc = true
 
-            runTask("javadoc", connection)
-            javadoc = true
-
-            runTask("test", connection)
-            test = true
-        } catch (ignored: Exception) {
+                runTask("test", connection)
+                test = true
+            } catch (ignored: Exception) {
+            }
         }
     }
 
-    return Triple(build, javadoc, test)
+    return GradleStatistic(build, javadoc, test)
 }
 
 
 fun buildStudentsProjects(statistics: List<StudentStatistic>, tasks: List<String>) = runBlocking {
     for (statistic in statistics) {
+        if (!statistic.isRepoCloned) {
+            continue
+        }
+
         for (task in tasks) {
             launch(Dispatchers.Default) {
                 val taskDir = statistic.projectDir.resolve(task)
 
-                with(gradleProcessProject(taskDir)) {
-                    statistic.build[task] = first
-                    statistic.javadoc[task] = second
-                    statistic.test[task] = third
-                }
+                statistic.gradleStatistics[task] = gradleProcessProject(taskDir)
             }
         }
     }

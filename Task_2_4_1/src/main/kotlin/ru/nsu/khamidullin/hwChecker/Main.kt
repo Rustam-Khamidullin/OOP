@@ -41,9 +41,7 @@ fun main(args: Array<String>) {
 
     buildStudentsProjects(statistics, tasks)
 
-    statistics.forEach { println(it.build) }
-    statistics.forEach { println(it.javadoc) }
-    statistics.forEach { println(it.test) }
+    statistics.forEach { println(it.gradleStatistics) }
 
     val file = File("./index.html")
     val out = OutputStreamWriter(FileOutputStream(file))
