@@ -4,29 +4,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.gradle.tooling.GradleConnector
+import org.gradle.tooling.ProjectConnection
 import ru.nsu.khamidullin.hwChecker.model.StudentStatistic
 import java.io.FileNotFoundException
 import java.nio.file.Path
 import kotlin.io.path.exists
 
-
-fun buildProject(projectDir: Path) {
-    if (!projectDir.exists()) {
-        throw FileNotFoundException("Can't find $projectDir")
-    }
-
-    val connector = GradleConnector.newConnector().apply {
-        forProjectDirectory(projectDir.toFile())
-    }
-
-    connector.connect().use { connection ->
-        val buildLauncher = connection.newBuild()
-        buildLauncher.forTasks("build")
-        buildLauncher.run()
+fun runTask(task: String, connection: ProjectConnection) {
+    with(connection.newBuild()) {
+        forTasks(task)
+        run()
     }
 }
 
-fun testProject(projectDir: Path) {
+fun gradleProcessProject(projectDir: Path): Triple<Boolean, Boolean, Boolean> {
+    var build = false
+    var javadoc = false
+    var test = false
+
     if (!projectDir.exists()) {
         throw FileNotFoundException("Can't find $projectDir")
     }
@@ -36,26 +31,20 @@ fun testProject(projectDir: Path) {
     }
 
     connector.connect().use { connection ->
-        val buildLauncher = connection.newBuild()
-        buildLauncher.forTasks("test")
-        buildLauncher.run()
-    }
-}
+        try {
+            runTask("build", connection)
+            build = true
 
-fun javadocProject(projectDir: Path) {
-    if (!projectDir.exists()) {
-        throw FileNotFoundException("Can't find $projectDir")
-    }
+            runTask("javadoc", connection)
+            javadoc = true
 
-    val connector = GradleConnector.newConnector().apply {
-        forProjectDirectory(projectDir.toFile())
+            runTask("test", connection)
+            test = true
+        } catch (ignored: Exception) {
+        }
     }
 
-    connector.connect().use { connection ->
-        val buildLauncher = connection.newBuild()
-        buildLauncher.forTasks("javadoc")
-        buildLauncher.run()
-    }
+    return Triple(build, javadoc, test)
 }
 
 
@@ -65,38 +54,11 @@ fun buildStudentsProjects(statistics: List<StudentStatistic>, tasks: List<String
             launch(Dispatchers.Default) {
                 val taskDir = statistic.projectDir.resolve(task)
 
-                statistic.build[task] = false
-                if (taskDir.exists()) {
-                    try {
-                        buildProject(taskDir)
-                        statistic.build[task] = true
-                    } catch (e: Exception) {
-                        println(e.message)
-                    }
+                with(gradleProcessProject(taskDir)) {
+                    statistic.build[task] = first
+                    statistic.javadoc[task] = second
+                    statistic.test[task] = third
                 }
-                println("${statistic.student.name} build: $task")
-
-                statistic.javadoc[task] = false
-                if (statistic.build[task] == true) {
-                    try {
-                        javadocProject(taskDir)
-                        statistic.javadoc[task] = true
-                    } catch (e: Exception) {
-                        println(e.message)
-                    }
-                }
-                println("${statistic.student.name} javadoc: $task")
-
-                statistic.test[task] = false
-                if (statistic.javadoc[task] == true) {
-                    try {
-                        testProject(taskDir)
-                        statistic.test[task] = true
-                    } catch (e: Exception) {
-                        println(e.message)
-                    }
-                }
-                println("${statistic.student.name} test: $task")
             }
         }
     }

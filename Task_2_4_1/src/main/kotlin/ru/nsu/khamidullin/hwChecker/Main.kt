@@ -12,12 +12,12 @@ import java.nio.file.Path
 import kotlin.io.path.listDirectoryEntries
 
 fun main(args: Array<String>) {
-    if (args.size != 1) {
-        println("Incorrect directory")
-        return
-    }
+//    if (args.size != 1) {
+//        println("Incorrect directory")
+//        return
+//    }
 
-    val workDir = Path.of(args[0])
+    val workDir = Path.of("./repositories")
 
     if (workDir.listDirectoryEntries().isNotEmpty()) {
         throw DirectoryNotEmptyException("Clear directory")
