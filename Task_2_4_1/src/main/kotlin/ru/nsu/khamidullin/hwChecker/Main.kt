@@ -39,6 +39,6 @@ fun main(args: Array<String>) {
     // Result html
     OutputStreamWriter(FileOutputStream(output.toFile())).use {
         val htmlGenerator = HtmlGenerator()
-        it.write(htmlGenerator.generateHtml(statistics))
+        it.write(htmlGenerator.generateHtml(statistics, Tasks.list))
     }
 }

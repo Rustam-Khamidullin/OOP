@@ -1,11 +1,10 @@
 package ru.nsu.khamidullin.hwChecker.html
 
 import ru.nsu.khamidullin.hwChecker.configuration.Criteria
-import ru.nsu.khamidullin.hwChecker.configuration.Tasks
 import ru.nsu.khamidullin.hwChecker.model.StudentStatistic
 
 class HtmlGenerator {
-    fun generateHtml(statistics: List<StudentStatistic>): String {
+    fun generateHtml(statistics: List<StudentStatistic>, tasks: List<String>): String {
         val htmlStringBuilder = StringBuilder(
             """
             <html><head><style>
@@ -18,7 +17,7 @@ class HtmlGenerator {
         """.trimIndent()
         )
 
-        for (task in Tasks.list) {
+        for (task in tasks) {
             htmlStringBuilder.append("<table>")
             htmlStringBuilder.append(getTemplate(task))
 

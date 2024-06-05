@@ -8,7 +8,7 @@ data object Criteria {
     const val PASSED = 5
 
     val score2mark = { score: Int ->
-        (score * 4 / MAX.toDouble()).roundToInt() + 1
+        (score * 3 / MAX.toDouble()).roundToInt() + 2
     }
 
     const val MAX = BUILD + JAVADOC + PASSED
