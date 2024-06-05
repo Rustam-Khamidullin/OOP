@@ -27,9 +27,7 @@ fun cloneRepository(repository: String, dir: Path): Int {
 fun cloneRepositories(statistics: List<StudentStatistic>) = runBlocking {
     for (statistic in statistics) {
         launch(Dispatchers.IO) {
-            val student = statistic.student
-
-            val status = cloneRepository(student.repository, statistic.projectDir)
+            val status = cloneRepository(statistic.student.repository, statistic.projectDir)
 
             if (status == 128) {
                 throw Exception("Clear target directory")

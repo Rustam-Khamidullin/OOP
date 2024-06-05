@@ -1,0 +1,15 @@
+package ru.nsu.khamidullin.hwChecker.configuration
+
+import kotlin.math.roundToInt
+
+data object Criteria {
+    const val BUILD = 5
+    const val JAVADOC = 1
+    const val PASSED = 5
+
+    val score2mark = { score: Int ->
+        (score * 4 / MAX.toDouble()).roundToInt() + 1
+    }
+
+    const val MAX = BUILD + JAVADOC + PASSED
+}
